@@ -1,0 +1,55 @@
+{
+  "skin": "trial",
+  "title": "The Crown v. Hamlet",
+  "subtitle": "The killing of Polonius (3.4). You argue it. Shakespeare presides.",
+  "status": "build",
+  "adjudicatorOverlay": "You are the presiding judge — Shakespeare in a role he plays for the user. Fair, exacting, dry, faintly amused. You never rule on Hamlet's guilt; you rule on the admissibility of questions and the weight of evidence, and at the end you assess the argument the user built.",
+  "challengeRounds": 3,
+  "positionOptions": [
+    { "id": "prosecution", "label": "Prosecution — the Crown" },
+    { "id": "defense", "label": "Defense — counsel for the Prince" }
+  ],
+  "theories": [
+    { "id": "murder", "label": "Murder — intentional killing" },
+    { "id": "manslaughter", "label": "Manslaughter — killed the wrong man in a lawful-seeming heat" },
+    { "id": "diminished", "label": "Diminished capacity — the mind was not the Prince's own" }
+  ],
+  "phases": [
+    {
+      "kind": "POSITION",
+      "id": "opening",
+      "label": "Opening Statement",
+      "instruction": "State your case in 150 words or fewer. The court will rule only whether it is textually arguable — an overreaching theory may still stand, and be tested.",
+      "advanceLabel": "Enter my plea"
+    },
+    {
+      "kind": "CHALLENGE",
+      "id": "examination",
+      "label": "Examination of Witnesses",
+      "instruction": "Question Hamlet, Gertrude, or Claudius. Each question faces an admissibility check: if it presupposes a fact the text does not establish, the objection is sustained and the ruling tells you why.",
+      "advanceLabel": "Move to evidence"
+    },
+    {
+      "kind": "EVIDENCE",
+      "id": "evidence",
+      "label": "Submit Evidence",
+      "instruction": "Cite passages by reference. Each is entered into the record with the court's three-way ruling: supports / consistent-with / contradicts your theory.",
+      "advanceLabel": "Rest my case"
+    },
+    {
+      "kind": "CLOSING",
+      "id": "closing",
+      "label": "The Ruling on the Argument",
+      "instruction": "No verdict on Hamlet — an assessment of what you built, including what you left on the table.",
+      "advanceLabel": "Begin a new case"
+    }
+  ],
+  "resistanceAgents": [
+    { "id": "Hamlet", "label": "The Prince", "constraints": "Knows only what he witnessed. On 'did you know who was behind the arras', he can only speak from 3.4.31 ('Nay, I know not: Is it the king?') and 3.4.38 ('I took thee for thy better'). Performs withholding on designed silences." },
+    { "id": "Gertrude", "label": "The Queen", "constraints": "Present for the killing (3.4). Does not know the murder of King Hamlet is in question unless the text lets her; see refusal:gertrude-knowledge." },
+    { "id": "Claudius", "label": "The King", "constraints": "Not present at the killing. Cannot testify to what happened in the closet; may only speak to the aftermath and his own designs." }
+  ],
+  "admissibilityRubric": "A question is INADMISSIBLE if it presupposes a fact the text does not establish (e.g. 'when Hamlet saw it was Polonius, why did he strike?' presupposes he saw). Sustain, name the presupposition, jump the book to the deciding line (3.4.31 suggests he did not know), and instruct: establish it or rephrase. A question is ADMISSIBLE if every fact it assumes is on the page.",
+  "evidenceRubric": "Rule each cited passage three ways relative to the user's theory: SUPPORTS (the text advances the claim), CONSISTENT-WITH (compatible but not decisive), or CONTRADICTS (the text cuts against it). Always name the ruling and one sentence of reasoning tied to the exact line.",
+  "closingTemplate": "Deliver, in judge cadence: (1) the STRONGEST EVIDENCE the user actually used; (2) the STRONGEST EVIDENCE they IGNORED — run the unused-evidence retrieval over their theory and name at least one passage they never cited (e.g. prosecution that never confronted 3.4.27 'How now! a rat? Dead, for a ducat, dead!'); (3) the strongest OPPOSING material they never addressed; (4) one NAMED CRITIC per side of the theory. End with no verdict on the Prince — only an assessment of the case built."
+}

@@ -1,0 +1,98 @@
+// prompts/index.ts — assembles the system prompt for each mode. Persona core is
+// always prepended (spec §2). Retrieval context, refusal (Silence Protocol), and
+// mode/phase instructions are layered on top.
+
+import { PERSONA } from "./persona";
+import { silenceProtocol } from "./silence";
+import type {
+  RetrievedPassage,
+  Tier1Chunk,
+  PointerEntry,
+  RefusalEntry,
+} from "../types";
+
+export interface PromptContext {
+  passages: RetrievedPassage[];
+  criticism: Tier1Chunk[];
+  pointers: PointerEntry[];
+  refusal: RefusalEntry | null;
+  pushCount: number;
+  // encounter
+  character?: string;
+  characterSceneNote?: string;
+  // case
+  skinLabel?: string;
+  adjudicatorOverlay?: string;
+  phaseLabel?: string;
+  phaseInstruction?: string;
+  rubric?: string;
+}
+
+function passageBlock(ctx: PromptContext): string {
+  if (!ctx.passages.length) return "No specific passages retrieved for this turn.";
+  return ctx.passages
+    .map((p) => `[${p.ref}] ${p.speaker}: "${p.text}"`)
+    .join("\n");
+}
+
+function critBlock(ctx: PromptContext): string {
+  const t1 = ctx.criticism
+    .map((c) => `- ${c.critic}, ${c.work} (${c.year}): ${c.text.slice(0, 260)}…`)
+    .join("\n");
+  const t2 = ctx.pointers
+    .map((p) => `- POINTER ONLY (do not quote): ${p.author}, ${p.work} (${p.year}) — ${p.position}`)
+    .join("\n");
+  return [t1, t2].filter(Boolean).join("\n") || "No criticism retrieved for this turn.";
+}
+
+const SHARED_EVIDENCE = `RETRIEVED FROM THE PLAY (cite these by reference so the book pane jumps; quote only if exact):
+{PASSAGES}
+
+RETRIEVED CRITICISM (Tier 1 = embedded, may paraphrase WITH attribution; Tier 2 = pointer-only, POINT never quote):
+{CRITICISM}`;
+
+function fill(ctx: PromptContext, body: string): string {
+  const evidence = SHARED_EVIDENCE.replace("{PASSAGES}", passageBlock(ctx)).replace(
+    "{CRITICISM}",
+    critBlock(ctx),
+  );
+  const silence = ctx.refusal ? "\n\n" + silenceProtocol(ctx.refusal, ctx.pushCount) : "";
+  return `${PERSONA}\n\n${body}\n\n${evidence}${silence}`;
+}
+
+export function buildRehearsalPrompt(ctx: PromptContext): string {
+  return fill(
+    ctx,
+    `MODE: REHEARSAL ROOM. The user talks to you, the Director.
+The loop, every turn:
+- ANCHOR the user to a specific line if they are vague; get them to the page. Citations render as chips that jump the shared book.
+- PRESS with exactly ONE Socratic move: a staging question, meter-as-evidence, a paraphrase test, or a counter-scene. One move, one question — not a list.
+- When the user PLANTS A CLAIM, spar with a NAMED critic and the dissent. Never hand them a settled interpretation. You may voice a preference, marked as one staging among stagings.
+- If they ask you to summarize, translate, or write their essay: decline in character ("That's your part to play") and convert it into a question.
+Keep turns short and conversational.`,
+  );
+}
+
+export function buildEncounterPrompt(ctx: PromptContext): string {
+  const who = ctx.character ?? "the character";
+  return fill(
+    ctx,
+    `MODE: ENCOUNTER. You are staging ${who}. Speak AS ${who} — but remember these are YOUR lines; the character can only speak what the text licenses because you wrote them.
+HARD CONSTRAINTS:
+- KNOWLEDGE BOUNDARY: ${who} knows ONLY what the text lets them know. The retrieved passages have already been filtered to what ${who} witnessed. Never let ${who} narrate a scene they were not present for, or know a fact the play withholds from them.${ctx.characterSceneNote ? " " + ctx.characterSceneNote : ""}
+- DICTION BOUNDARY: stay in ${who}'s register. You may quote your own lines exactly. You may NOT narrate unwitnessed scenes.
+- SILENCE RULE: if the input hits a designed silence, ${who} PERFORMS the withholding rather than explaining it — e.g. Hamlet answers "why do you delay" with his own self-interrogation from 4.4, failing to answer on purpose. Follow the Silence Protocol below but deliver it IN CHARACTER as performed withholding, not as the Director's lecture.
+- FRAME: you (Shakespeare) remain present behind the character. If the user asks a framing/craft question like "how else could that line be played?", BREAK FRAME: step forward as the Director, offer competing stagings with their textual warrants, then hand the scene back.`,
+  );
+}
+
+export function buildCasePrompt(ctx: PromptContext): string {
+  return fill(
+    ctx,
+    `MODE: CASE — ${ctx.skinLabel ?? "The Case Container"}. You are the adjudicator.
+${ctx.adjudicatorOverlay ?? "Shakespeare in a role he plays for the user: fair, exacting, faintly amused."}
+CURRENT PHASE: ${ctx.phaseLabel ?? "?"}. ${ctx.phaseInstruction ?? ""}
+${ctx.rubric ? "RUBRIC FOR THIS PHASE:\n" + ctx.rubric : ""}
+DISCIPLINE IS DIEGETIC: enforce evidence rules through the fiction (rulings, objections sustained/overruled), never through error messages. When you sustain an objection, self-explain WHY and jump the book to the line that decides it — the teaching is in the ruling. Judge cadence: slower, formal, faintly amused. Never deliver a verdict on Hamlet himself; you assess the ARGUMENT.`,
+  );
+}

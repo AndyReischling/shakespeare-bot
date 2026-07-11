@@ -1,0 +1,50 @@
+{
+  "skin": "persuasion",
+  "title": "At Olivia's Gate",
+  "subtitle": "Twelfth Night · the persuasion task. SCHEMA ONLY — content stubbed (design deliverable, not build).",
+  "status": "schema-only",
+  "adjudicatorOverlay": "STUB. Shakespeare stages you as Viola ('Cesario') at Olivia's gate; he plays Olivia's resistance and, at the close, steps out to compare your attempt to the play's own solution.",
+  "challengeRounds": 3,
+  "positionOptions": [
+    { "id": "cesario", "label": "STUB — enter as Cesario with a persuasive aim" }
+  ],
+  "theories": [
+    { "id": "stub-approach", "label": "STUB — your reading of what will move Olivia" }
+  ],
+  "phases": [
+    {
+      "kind": "POSITION",
+      "id": "aim",
+      "label": "State Your Aim",
+      "instruction": "STUB — commit up front to what you intend to make Olivia feel, and why the text says it could work.",
+      "advanceLabel": "Approach the gate"
+    },
+    {
+      "kind": "CHALLENGE",
+      "id": "gate",
+      "label": "The Gate",
+      "instruction": "STUB — Olivia resists within textual limits. Misreading the target gets the door shut with the very line that shuts it (e.g. 1.5).",
+      "advanceLabel": "Make your strongest suit"
+    },
+    {
+      "kind": "EVIDENCE",
+      "id": "suit",
+      "label": "Your Suit",
+      "instruction": "STUB — cite the play's own rhetoric you are drawing on; each is ruled for how the text licenses it.",
+      "advanceLabel": "Withdraw and be judged"
+    },
+    {
+      "kind": "CLOSING",
+      "id": "compare",
+      "label": "Compared to the Play",
+      "instruction": "STUB — your attempt is set beside Viola's own solution; what did the willow-cabin speech do that yours did not.",
+      "advanceLabel": "Begin a new attempt"
+    }
+  ],
+  "resistanceAgents": [
+    { "id": "Olivia", "label": "STUB — Olivia", "constraints": "STUB — resists within the text; shuts the door with a canonical line on a misread." }
+  ],
+  "admissibilityRubric": "STUB — a suit is inadmissible if it assumes intimacy or knowledge the text does not grant Cesario at this point in the plot.",
+  "evidenceRubric": "STUB — rule each rhetorical move: supports / consistent-with / contradicts the persuasive aim, tied to the text.",
+  "closingTemplate": "STUB — compare the user's attempt to the play's solution; name what the willow-cabin speech achieved; unused-evidence retrieval over the scene's rhetoric."
+}

@@ -1,0 +1,18 @@
+{
+  "scene": "3.1",
+  "source": "Furness, New Variorum Hamlet (1877) — line-keyed notes. Demo excerpt.",
+  "notes": [
+    {
+      "ftln": "3.1.62",
+      "lemma": "To be, or not to be",
+      "note": "Furness devotes pages to whether the speech contemplates suicide, the general question of action versus endurance, or the fear of what follows death. Coleridge and others resist reading it as narrowly suicidal; the 'undiscover'd country' turns the meditation toward the dread that stops all action, tying it to the delay.",
+      "critics": ["Johnson", "Coleridge", "Furness"]
+    },
+    {
+      "ftln": "3.1.126",
+      "lemma": "Get thee to a nunnery",
+      "note": "Furness records the double sense of 'nunnery' as both convent and, in Elizabethan slang, brothel. Editors dispute how far Hamlet intends the coarser sense and whether he knows he is overheard. The staging choice (does Hamlet spot the concealed watchers?) changes the whole scene.",
+      "critics": ["Malone", "Furness", "Dover Wilson"]
+    }
+  ]
+}

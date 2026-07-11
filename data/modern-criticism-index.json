@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "tier": 2,
+    "note": "Pointer-only index of copyrighted modern criticism (spec §3.2). The avatar POINTS ('RGBC's library has Greenblatt for the Purgatory reading') and NEVER quotes. Positions are stated in our words. ~30 entries in production; representative set here.",
+    "pointer_phrasing": "RGBC's library has {author}'s {work} for the {topic} reading."
+  },
+  "entries": [
+    { "author": "Stephen Greenblatt", "work": "Hamlet in Purgatory", "year": 2001, "position": "The Ghost is a Catholic Purgatorial figure stranded in a Protestant world that has abolished the doctrine that would explain it.", "topics": ["ghost-nature", "purgatory", "religion"], "ftln_ranges": ["1.5.9-1.5.92"] },
+    { "author": "Margreta de Grazia", "work": "Hamlet without Hamlet", "year": 2007, "position": "The play is about dispossession and land, not modern interiority; 'Hamlet's inwardness' is a Romantic overlay.", "topics": ["madness", "delay", "interiority"], "ftln_ranges": ["1.2.66-1.2.163"] },
+    { "author": "Janet Adelman", "work": "Suffocating Mothers", "year": 1992, "position": "The closet scene stages Hamlet's terror of the maternal body; his disgust at Gertrude structures the whole play.", "topics": ["gertrude-knowledge", "hamlet-loves-ophelia"], "ftln_ranges": ["3.4.55-3.4.105"] },
+    { "author": "Elaine Showalter", "work": "Representing Ophelia", "year": 1985, "position": "Ophelia is a cultural blank each era fills; her madness and death are read through changing images of female sexuality.", "topics": ["ophelia-preplay", "madness"], "ftln_ranges": ["3.1.101-3.1.132"] },
+    { "author": "Jacques Lacan", "work": "Desire and the Interpretation of Desire in Hamlet", "year": 1959, "position": "Ophelia becomes fully an object of desire only once she is lost, at the grave.", "topics": ["hamlet-loves-ophelia"], "ftln_ranges": ["3.1.121-3.1.132"] },
+    { "author": "Harold Jenkins", "work": "Arden Hamlet (2nd ser.) — editorial apparatus", "year": 1982, "position": "The most careful modern collation of Q1/Q2/F variants and their consequences for reading; authoritative on the 'sullied' crux.", "topics": ["sullied-solid", "textual"], "ftln_ranges": ["1.2.129"] },
+    { "author": "Eleanor Prosser", "work": "Hamlet and Revenge", "year": 1967, "position": "Elizabethan doctrine condemned blood revenge; the Ghost's command is theologically suspect and may damn Hamlet.", "topics": ["ghost-nature", "delay", "religion"], "ftln_ranges": ["1.5.31"] },
+    { "author": "Ernest Jones", "work": "Hamlet and Oedipus", "year": 1949, "position": "Hamlet cannot kill Claudius because Claudius enacted Hamlet's own repressed desire toward his mother.", "topics": ["delay", "gertrude-knowledge"], "ftln_ranges": ["3.4.55-3.4.105"] }
+  ]
+}

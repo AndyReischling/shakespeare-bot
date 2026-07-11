@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-stage-black text-stage-ink font-sans antialiased;
+  /* Flat cream with the faintest warmth — a gallery wall, not a gradient. */
+  background-image: radial-gradient(1400px 700px at 82% -12%, rgba(107, 131, 246, 0.05), transparent 62%);
+}
+
+/* Display serif helper — the Norton wordmark voice. */
+.display {
+  @apply font-serif;
+  font-optical-sizing: auto;
+}
+
+/* Periwinkle focus ring for keyboard nav (accessibility floor, §8). */
+:focus-visible {
+  outline: 2px solid theme("colors.work.light");
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Respect reduced-motion (§8). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .worklabel {
+    @apply text-[11px] uppercase tracking-[0.22em] text-stage-faint;
+  }
+
+  /* Citation chip — jumps the book pane (§4.2). */
+  .cite-chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-work-deep/35 bg-work-light/10
+           px-2 py-0.5 text-[12px] font-mono text-work-glow transition-colors
+           hover:bg-work-light/20 focus-visible:bg-work-light/20 cursor-pointer;
+  }
+
+  .prompt-chip {
+    @apply inline-flex items-center rounded-full border border-stage-edge bg-stage-panel
+           px-3 py-1.5 text-[13px] text-stage-dim transition-colors
+           hover:border-work-deep hover:text-stage-ink cursor-pointer;
+  }
+
+  .book-line {
+    @apply grid grid-cols-[3.5rem_1fr] gap-3 px-4 py-0.5 leading-relaxed;
+  }
+
+  .book-ftln {
+    @apply select-none text-right font-mono text-[11px] text-page-faint pt-1;
+  }
+
+  /* Primary action — bold periwinkle block, dark ink on top (the campaign move). */
+  .btn-work {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-transparent
+           bg-work-light px-4 py-2 text-sm font-semibold text-stage-ink transition-colors
+           hover:bg-work-deep hover:text-stage-panel
+           disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-stage-edge
+           bg-transparent px-3 py-1.5 text-sm text-stage-dim transition-colors
+           hover:border-stage-ink hover:text-stage-ink;
+  }
+}

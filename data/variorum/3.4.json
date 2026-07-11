@@ -1,0 +1,24 @@
+{
+  "scene": "3.4",
+  "source": "Furness, New Variorum Hamlet (1877) — line-keyed notes. Demo excerpt.",
+  "notes": [
+    {
+      "ftln": "3.4.27",
+      "lemma": "How now! a rat? Dead, for a ducat, dead!",
+      "note": "Furness gathers the debate on Hamlet's knowledge behind the arras. Does he take the hidden listener for the King? His own next line — 'Is it the king?' — is collected as evidence that he does not know, though editors note it can be played as horror rather than genuine ignorance. Central to any trial of the killing.",
+      "critics": ["Johnson", "Furness"]
+    },
+    {
+      "ftln": "3.4.31",
+      "lemma": "Nay, I know not: Is it the king?",
+      "note": "The single strongest textual surface for the question of intent. Furness: the line 'seems decisive that Hamlet did not know whom he had killed'; contrary staging tradition has Hamlet hope it is the King. The ambiguity is why the closet killing resists a settled legal reading.",
+      "critics": ["Furness", "Coleridge"]
+    },
+    {
+      "ftln": "3.4.38",
+      "lemma": "I took thee for thy better",
+      "note": "Read alongside 3.4.31: 'thy better' is glossed as the King. Furness treats it as confirmation that Hamlet aimed at Claudius, not Polonius — manslaughter of Polonius in the attempt on the King, or transferred intent. The line the prosecution must confront and the defense must lean on.",
+      "critics": ["Furness", "Malone"]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "scene": "1.2",
+  "source": "Furness, New Variorum Hamlet (1877) — line-keyed notes. Demo excerpt; full parse via scripts/ingest-criticism.ts.",
+  "notes": [
+    {
+      "ftln": "1.2.69",
+      "lemma": "A little more than kin, and less than kind",
+      "note": "Furness collects the gloss war: 'kind' as both 'kindred/kinsman' and 'natural affection/nature.' Hamlet is more than kin (uncle now father) and less than kind (neither natural in feeling nor of a kindly disposition). Johnson: 'less than kind' = not of the same nature or character.",
+      "critics": ["Johnson", "Steevens", "Malone"]
+    },
+    {
+      "ftln": "1.2.134",
+      "lemma": "too too sullied flesh",
+      "note": "The great crux. Q2 reads 'sallied,' F reads 'solid.' Furness prints the divergence at length; nineteenth-century editors overwhelmingly followed F's 'solid'; the twentieth century (Dover Wilson) recovered 'sullied' from 'sallied.' See refusal-map: sullied-solid.",
+      "critics": ["Theobald", "Dover Wilson", "Furness"]
+    },
+    {
+      "ftln": "1.2.151",
+      "lemma": "Frailty, thy name is woman",
+      "note": "Furness notes the line has been read both as a universal (mankind's frailty figured as woman) and as a specific indictment of Gertrude. The generalization is Hamlet's, not the play's; commentators warn against taking the hero's misogyny as the drama's verdict.",
+      "critics": ["Coleridge", "Hazlitt"]
+    }
+  ]
+}

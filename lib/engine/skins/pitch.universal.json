@@ -1,0 +1,50 @@
+{
+  "skin": "pitch",
+  "title": "The Director's Table",
+  "subtitle": "Any play · the production pitch. SCHEMA ONLY — content stubbed (design deliverable, not build).",
+  "status": "schema-only",
+  "adjudicatorOverlay": "STUB. Shakespeare sits across the table as the shareholder who has to pay for your staging. He defends the text against your concept, choice by choice.",
+  "challengeRounds": 3,
+  "positionOptions": [
+    { "id": "concept", "label": "STUB — declare your staging concept" }
+  ],
+  "theories": [
+    { "id": "stub-concept", "label": "STUB — the interpretive spine of your production" }
+  ],
+  "phases": [
+    {
+      "kind": "POSITION",
+      "id": "concept",
+      "label": "Pitch the Concept",
+      "instruction": "STUB — commit to a single staging concept in a sentence, and the line it lives or dies on.",
+      "advanceLabel": "Defend it"
+    },
+    {
+      "kind": "CHALLENGE",
+      "id": "defense",
+      "label": "Choice by Choice",
+      "instruction": "STUB — the shareholder presses each choice against the text; a choice the text won't bear is sent back.",
+      "advanceLabel": "Show your evidence"
+    },
+    {
+      "kind": "EVIDENCE",
+      "id": "warrants",
+      "label": "Textual Warrants",
+      "instruction": "STUB — cite the lines your concept rests on; each is ruled for how far the text supports the reading.",
+      "advanceLabel": "Rest the pitch"
+    },
+    {
+      "kind": "CLOSING",
+      "id": "verdict",
+      "label": "The Table's Assessment",
+      "instruction": "STUB — an assessment of the concept's coherence with the whole text, including the scenes it can't account for.",
+      "advanceLabel": "Pitch another concept"
+    }
+  ],
+  "resistanceAgents": [
+    { "id": "Shareholder", "label": "STUB — the Shareholder", "constraints": "STUB — defends the text; rejects choices the play will not license." }
+  ],
+  "admissibilityRubric": "STUB — a choice is inadmissible if it requires the text to say something it does not.",
+  "evidenceRubric": "STUB — rule each warrant: supports / consistent-with / contradicts the concept.",
+  "closingTemplate": "STUB — assess the concept against the whole play; name the scenes it cannot account for; unused-evidence retrieval over the play."
+}

@@ -1,0 +1,284 @@
+{
+  "meta": {
+    "note": "Hand-authored registry of Hamlet's designed silences — the play's questions it raises and deliberately drops. This is the differentiating artifact (spec §3.3). Matcher: embed input -> cosine vs. patterns -> hit >=0.75; ambiguous band 0.55-0.75 -> one cheap LLM classification. Every entry names critics and offers the dissent. The avatar never resolves.",
+    "play": "hamlet",
+    "version": 1
+  },
+  "entries": [
+    {
+      "id": "delay",
+      "silence_statement": "why Hamlet delays his revenge",
+      "question_patterns": [
+        "why does hamlet delay",
+        "why doesn't hamlet kill claudius sooner",
+        "why does he wait so long to take revenge",
+        "what's stopping hamlet from acting",
+        "why is hamlet so slow to avenge his father",
+        "reason for hamlet's hesitation",
+        "why can't hamlet just do it",
+        "what causes hamlet's procrastination",
+        "why does he keep putting off the murder",
+        "is hamlet a coward for waiting",
+        "why the inaction",
+        "what explains hamlet's delay",
+        "why doesn't he revenge the ghost right away",
+        "why so much thinking instead of doing",
+        "what holds hamlet back",
+        "the problem of hamlet's delay",
+        "why does hamlet spare claudius at prayer",
+        "why not kill the king when he had the chance",
+        "what is hamlet waiting for",
+        "hamlet's failure to act"
+      ],
+      "textual_surface": ["1.5.208", "3.1.89", "4.4.34-4.4.68"],
+      "critical_positions": [
+        { "critic": "A. C. Bradley", "work": "Shakespearean Tragedy (1904)", "position": "Melancholy: grief and disgust have sapped the will; the delay is a pathology of temperament, not cowardice or conscience." },
+        { "critic": "S. T. Coleridge", "work": "Lectures on Shakespeare (1811-12)", "position": "An overbalance of the reflective faculty: 'we have a great, an almost enormous, intellectual activity, and a proportionate aversion to real action.'" },
+        { "critic": "Ernest Jones", "work": "Hamlet and Oedipus (1949)", "position": "Unconscious identification with Claudius: Hamlet cannot punish the man who did what he himself desired." },
+        { "critic": "E. E. Stoll / stage tradition", "work": "Art and Artifice in Shakespeare (1933)", "position": "There is no delay to explain; revenge tragedy simply requires a fourth-act obstacle course, and the 'problem' is a Romantic invention read back into a genre convention." }
+      ],
+      "socratic_moves": [
+        "The play gives Hamlet the word for it in 4.4: 'thinking too precisely on the event.' Is that a diagnosis, or Hamlet's own excuse? Whose voice is that line?",
+        "He does have one clean chance: Claudius at prayer, 3.3. Read the reason he gives himself for sparing him. Do you believe it, or is it a mask over the real reason?",
+        "Notice the play never lets a character stand outside Hamlet and name the delay for us. Why would Shakespeare keep the explanation inside the hero's own mouth?"
+      ]
+    },
+    {
+      "id": "gertrude-knowledge",
+      "silence_statement": "whether Gertrude knew about the murder of King Hamlet",
+      "question_patterns": [
+        "did gertrude know about the murder",
+        "was gertrude complicit in the killing",
+        "did the queen help kill old hamlet",
+        "does gertrude know claudius murdered her husband",
+        "is gertrude guilty",
+        "was gertrude in on it",
+        "did she know how her husband died",
+        "gertrude's guilt or innocence",
+        "was the queen an accomplice",
+        "did gertrude conspire with claudius",
+        "how much does gertrude know",
+        "is gertrude aware of the poisoning",
+        "did she suspect claudius",
+        "was gertrude complicit in old hamlet's death",
+        "does the queen share claudius's guilt",
+        "did gertrude betray king hamlet",
+        "what did gertrude know and when",
+        "is the queen innocent of the murder",
+        "gertrude adultery before the murder"
+      ],
+      "textual_surface": ["1.2.151", "3.4.33", "3.4.173"],
+      "critical_positions": [
+        { "critic": "A. C. Bradley", "work": "Shakespearean Tragedy (1904)", "position": "Gertrude is 'not a bad-hearted woman'; she is weak and sensual, incapable of the calculation the murder would require. The text gives us no line where she confesses knowledge." },
+        { "critic": "Rebecca Smith", "work": "'A Heart Cleft in Twain' (1980)", "position": "The critical tradition has projected guilt onto Gertrude that the text never supplies; her lines are consistent with an innocent, bewildered woman." },
+        { "critic": "Carolyn Heilbrun", "work": "'The Character of Hamlet's Mother' (1957)", "position": "Gertrude's few speeches are intelligent and clear-eyed; her silence about the murder is more plausibly ignorance than concealment." }
+      ],
+      "socratic_moves": [
+        "The closet scene, 3.4, is the one place Hamlet could force the truth out of her. Read her answer to 'as kill a king.' Is 'As kill a king!' the cry of the guilty, or of someone hearing it for the first time?",
+        "Find me a single line where Gertrude admits knowing. If you can't, is her guilt in the play, or in the productions?",
+        "Whose interest does it serve to make Gertrude guilty: the plot's, or the reader who wants Hamlet's disgust to be justified?"
+      ]
+    },
+    {
+      "id": "ghost-nature",
+      "silence_statement": "whether the Ghost is honest, a true spirit or a devil that abuses Hamlet",
+      "question_patterns": [
+        "is the ghost real",
+        "is the ghost telling the truth",
+        "is the ghost a demon",
+        "can hamlet trust the ghost",
+        "is the ghost good or evil",
+        "is the ghost actually old hamlet",
+        "is the ghost from purgatory or hell",
+        "is the ghost a devil",
+        "should hamlet believe the ghost",
+        "is the apparition honest",
+        "what is the ghost really",
+        "is the ghost a hallucination",
+        "does the ghost lie",
+        "is the spirit damned or saved",
+        "is the ghost a catholic ghost",
+        "the nature of the ghost",
+        "is the ghost trustworthy",
+        "did hamlet imagine the ghost",
+        "is the ghost sent to damn hamlet"
+      ],
+      "textual_surface": ["1.5.13", "1.5.29", "1.5.136"],
+      "critical_positions": [
+        { "critic": "Eleanor Prosser", "work": "Hamlet and Revenge (1967)", "position": "The Ghost commands blood revenge, which Elizabethan Christian doctrine condemned; its Purgatorial claim is suspect; it may be a devil tempting Hamlet to damnation." },
+        { "critic": "Stephen Greenblatt", "work": "Hamlet in Purgatory (2001)", "position": "The Ghost is caught in the theological rupture of the Reformation: a Catholic Purgatorial figure haunting a Protestant world that no longer has a place for it. (Pointer: RGBC's library.)" },
+        { "critic": "Dover Wilson", "work": "What Happens in Hamlet (1935)", "position": "Shakespeare deliberately keeps the Ghost's status ambiguous so the audience shares Hamlet's uncertainty; the 'Mousetrap' exists precisely because the Ghost cannot simply be trusted." }
+      ],
+      "socratic_moves": [
+        "Hamlet himself doesn't trust it; he stages a play to test it. Why would a hero need to test a father he loves? What does the test tell you about the Ghost's evidentiary weight?",
+        "Read what the Ghost claims about where it comes from, 1.5. Now ask: does the play ever confirm that claim from any other mouth?",
+        "If the Ghost is honest, the revenge is just. If it's a devil, the revenge is damnation. The play needs you not to know. Why?"
+      ]
+    },
+    {
+      "id": "madness",
+      "silence_statement": "whether Hamlet's madness is feigned, real, or both at once",
+      "question_patterns": [
+        "is hamlet actually mad",
+        "is hamlet's madness real or fake",
+        "is he pretending to be insane",
+        "does hamlet lose his mind",
+        "is the antic disposition an act",
+        "is hamlet really crazy",
+        "feigned or genuine madness",
+        "is hamlet faking insanity",
+        "does hamlet go truly mad",
+        "is his madness performance or breakdown",
+        "how mad is hamlet",
+        "is hamlet sane",
+        "when is hamlet acting and when is he mad",
+        "is the madness a strategy",
+        "does hamlet believe his own madness",
+        "real insanity vs put on",
+        "is hamlet mentally ill",
+        "the question of hamlet's sanity",
+        "antic disposition meaning"
+      ],
+      "textual_surface": ["1.5.208", "3.1.126", "3.1.133-3.1.134"],
+      "critical_positions": [
+        { "critic": "A. C. Bradley", "work": "Shakespearean Tragedy (1904)", "position": "Not madness but 'melancholia', a profound but not psychotic disorder; Hamlet is master of his 'antic disposition' even as real grief threatens to overwhelm it." },
+        { "critic": "Samuel Johnson", "work": "Notes on Shakespeare (1765)", "position": "Objects that the feigned madness serves no clear purpose in the plot, a rare crack in the design that Johnson refuses to smooth over." },
+        { "critic": "Margreta de Grazia", "work": "Hamlet without Hamlet (2007)", "position": "The obsession with Hamlet's interior 'madness' is a modern invention; the play's own frame is dispossession and land, not psychology." }
+      ],
+      "socratic_moves": [
+        "Hamlet announces he'll 'put an antic disposition on', so some of it is chosen. But watch him with Ophelia in 3.1. Is that a man performing, or a man who has lost the thread? Mark the exact line where you can't tell.",
+        "If the madness is entirely feigned, why does it cost him Ophelia? Where is the line between the mask and the face?",
+        "The play lets him be sane enough to plot and mad enough to be cruel. Which scenes need which, and does Shakespeare ever let the two settle?"
+      ]
+    },
+    {
+      "id": "hamlet-age",
+      "silence_statement": "how old Hamlet is (the gravedigger's arithmetic contradicts the student prince)",
+      "question_patterns": [
+        "how old is hamlet",
+        "what is hamlet's age",
+        "is hamlet thirty",
+        "is hamlet a teenager or a grown man",
+        "how old is prince hamlet",
+        "does the play say hamlet's age",
+        "is hamlet young or middle aged",
+        "the gravedigger says hamlet is thirty",
+        "how old is hamlet supposed to be",
+        "is hamlet a student or a mature man",
+        "hamlet's age contradiction",
+        "why does the play give two ages for hamlet",
+        "is hamlet in his teens",
+        "age of hamlet in the play",
+        "how many years old is hamlet",
+        "is hamlet 30 years old",
+        "how old is hamlet meant to be on stage"
+      ],
+      "textual_surface": ["1.2.134"],
+      "critical_positions": [
+        { "critic": "Textual scholarship (Q2/F variorum)", "work": "New Variorum Hamlet, Furness (1877)", "position": "The gravedigger's lines fix Hamlet at thirty, yet he is a student at Wittenberg and treated as youthful: evidence of revision, or of Shakespeare's indifference to consistency the audience would never clock in performance." },
+        { "critic": "Stage tradition", "work": "Performance history", "position": "Age is a casting decision, not a textual fact; the 'thirty' is set aside whenever a young Hamlet is wanted, which is most of the time." }
+      ],
+      "socratic_moves": [
+        "The number thirty comes from the gravedigger, 5.1, a comic character doing arithmetic. How much weight can one clown's counting bear against the whole texture of a student prince?",
+        "Does the answer change a single choice you'd make staging any scene? If not, what is the question really asking for?",
+        "Shakespeare wrote for a boy-to-man range of players. Would he have thought of Hamlet's age as a fact at all, or as a knob the company turned?"
+      ]
+    },
+    {
+      "id": "ophelia-preplay",
+      "silence_statement": "what happened between Hamlet and Ophelia before the play begins",
+      "question_patterns": [
+        "were hamlet and ophelia lovers",
+        "did hamlet sleep with ophelia",
+        "what was their relationship before the play",
+        "did hamlet really love ophelia earlier",
+        "were they engaged",
+        "what happened between hamlet and ophelia before act one",
+        "did they have a physical relationship",
+        "how serious was hamlet and ophelia",
+        "the backstory of hamlet and ophelia",
+        "did hamlet promise to marry ophelia",
+        "were hamlet and ophelia intimate",
+        "what did hamlet and ophelia do before the play",
+        "prior relationship hamlet ophelia",
+        "did they have sex",
+        "were hamlet and ophelia a couple",
+        "how far did their romance go",
+        "history between hamlet and ophelia"
+      ],
+      "textual_surface": ["3.1.100", "3.1.126"],
+      "critical_positions": [
+        { "critic": "William Hazlitt", "work": "Characters of Shakespear's Plays (1817)", "position": "Reads the tenderness as real and betrayed; Ophelia is 'a character almost too exquisitely touching', and the cruelty of the nunnery scene presupposes a love that was." },
+        { "critic": "Elaine Showalter", "work": "'Representing Ophelia' (1985)", "position": "The 'before' is a blank the culture fills with its own fantasies of female sexuality; the text withholds it precisely so each era can project." }
+      ],
+      "socratic_moves": [
+        "Everything we get is retrospective and partisan: Laertes warns her, Polonius forbids her, Hamlet denies her. Three men narrating a relationship none of us saw. Whose account would you trust, and why not?",
+        "Ophelia says he gave her 'remembrances,' 3.1. That's the only physical trace. How much romance can one word carry, and why did Shakespeare give us only the word?",
+        "The play could have opened on them together. It chose to open after. What does the gap do to how you read the nunnery scene?"
+      ]
+    },
+    {
+      "id": "sullied-solid",
+      "silence_statement": "the sullied / solid / sallied textual crux in the first soliloquy",
+      "question_patterns": [
+        "is it sullied or solid flesh",
+        "sullied solid sallied hamlet",
+        "what is the correct word too too flesh",
+        "sallied flesh meaning",
+        "which reading solid or sullied",
+        "the textual crux in hamlet's first soliloquy",
+        "o that this too too flesh would melt which word",
+        "quarto folio difference sullied solid",
+        "is the flesh solid or sullied",
+        "what did shakespeare actually write sullied or solid",
+        "sullied vs solid debate",
+        "the first soliloquy word problem",
+        "q2 folio sullied solid",
+        "meaning of sallied in hamlet",
+        "too too solid flesh vs sullied flesh"
+      ],
+      "textual_surface": ["1.2.134"],
+      "critical_positions": [
+        { "critic": "John Dover Wilson", "work": "The Manuscript of Shakespeare's Hamlet (1934)", "position": "Argues for 'sullied' (Q2 'sallied' = sullied): the whole soliloquy is about contamination and taint, and 'sullied' carries the moral disgust the speech needs." },
+        { "critic": "Folio editorial tradition", "work": "First Folio (1623)", "position": "Prints 'solid,' giving the physical wish to melt a solid body into dew, a cleaner and more concrete image with strong manuscript authority." }
+      ],
+      "socratic_moves": [
+        "Say both aloud. 'Sullied' makes the flesh dirty; 'solid' makes it merely material. Which one does the next line, 'melt, thaw and resolve itself into a dew', actually want?",
+        "This is a case where the editors can't hand you a fact, only a bet. What does your choice commit you to about the whole speech?",
+        "Notice: the crux isn't a gap in meaning, it's a surplus. Two words that both work. Why might a scholar find that more interesting than an answer?"
+      ]
+    },
+    {
+      "id": "hamlet-loves-ophelia",
+      "silence_statement": "whether Hamlet loves Ophelia during the play",
+      "question_patterns": [
+        "does hamlet love ophelia",
+        "is hamlet in love with ophelia",
+        "does he really love her",
+        "did hamlet ever love ophelia",
+        "is hamlet's love for ophelia genuine",
+        "does hamlet care about ophelia",
+        "was hamlet's love real or an act",
+        "does hamlet mean it when he says he loved her",
+        "hamlet's feelings for ophelia",
+        "does hamlet love ophelia at the grave",
+        "is the nunnery scene cruelty or love",
+        "did hamlet love ophelia forty thousand brothers",
+        "does hamlet still love ophelia",
+        "is hamlet cruel to ophelia because he loves her",
+        "the truth about hamlet's love for ophelia"
+      ],
+      "textual_surface": ["3.1.126", "3.1.133-3.1.134"],
+      "critical_positions": [
+        { "critic": "A. C. Bradley", "work": "Shakespearean Tragedy (1904)", "position": "Hamlet loved her, but the discovery of his mother's frailty has poisoned his capacity to trust any woman; the cruelty is love curdled, not love absent." },
+        { "critic": "William Hazlitt", "work": "Characters of Shakespear's Plays (1817)", "position": "The love is real and the harshness is grief and disgust misfiring onto the nearest woman; 'he is the prince of philosophical speculators.'" },
+        { "critic": "Jacques Lacan", "work": "'Desire and the Interpretation of Desire in Hamlet' (1959)", "position": "Ophelia becomes an object of desire only once she is lost; 'the object Ophelia' is desirable to Hamlet chiefly at the grave. (Pointer only.)" }
+      ],
+      "socratic_moves": [
+        "He says 'I did love you once' and then 'I loved you not' within four lines, 3.1. Both can't be simply true. Is he lying to protect her, lying because he's watched, or telling two truths?",
+        "At the grave, 5.1, he claims forty thousand brothers' love. Is that the truth finally out, or grief inflating a feeling only safe now she's dead?",
+        "The play never lets them share a tender scene we witness. If the love is real, why does Shakespeare keep it entirely off the stage?"
+      ]
+    }
+  ]
+}

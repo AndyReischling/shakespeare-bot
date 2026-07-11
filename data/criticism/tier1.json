@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "tier": 1,
+    "note": "Embedded full-text criticism, public domain. Every chunk carries critic + work + year; the avatar must attribute by name and offer the dissent. Criticism is an argument the student joins, never an answer key (spec §3.2). Chunks ~500 tokens in production; excerpted here for the demo. Full ingest via scripts/ingest-criticism.ts.",
+    "chunking": "~500 tokens"
+  },
+  "chunks": [
+    {
+      "id": "johnson-1765-general",
+      "critic": "Samuel Johnson",
+      "work": "Notes on Shakespeare",
+      "year": 1765,
+      "ftln_focus": ["1.2.129", "3.1.57"],
+      "text": "If the dramas of Shakespeare were to be characterised, each by the particular excellence which distinguishes it from the rest, we must allow to the tragedy of Hamlet the praise of variety. The pretended madness of Hamlet causes much mirth, the mournful distraction of Ophelia fills the heart with tenderness. Yet the conduct is perhaps not wholly secure against objections. Of the feigned madness of Hamlet there appears no adequate cause, for he does nothing which he might not have done with the reputation of sanity."
+    },
+    {
+      "id": "coleridge-1811-reflection",
+      "critic": "Samuel Taylor Coleridge",
+      "work": "Lectures on Shakespeare",
+      "year": 1811,
+      "ftln_focus": ["1.5.116", "3.1.90", "4.4.34"],
+      "text": "In Hamlet Shakespeare seems to have wished to exemplify the moral necessity of a due balance between our attention to outward objects and our meditation on inward thoughts. In Hamlet this balance is disturbed: his thoughts, images, and fancy being far more vivid than his perceptions, and his very perceptions instantly passing through the medium of his contemplations. Hence we see a great, an almost enormous, intellectual activity, and a proportionate aversion to real action consequent upon it."
+    },
+    {
+      "id": "hazlitt-1817-ophelia",
+      "critic": "William Hazlitt",
+      "work": "Characters of Shakespear's Plays",
+      "year": 1817,
+      "ftln_focus": ["3.1.101", "3.1.121"],
+      "text": "Hamlet is a name; his speeches and sayings but the idle coinage of the poet's brain. It is we who are Hamlet. Ophelia is a character almost too exquisitely touching to be dwelt upon. Oh rose of May! Oh flower too soon faded! Her love, her madness, her death, are described with the truest touches of tenderness and pathos. Hamlet's treatment of her is unaccountable but for the natural aberration of his own mind, which is dazzled and confounded by its own misery."
+    },
+    {
+      "id": "bradley-1904-melancholy",
+      "critic": "A. C. Bradley",
+      "work": "Shakespearean Tragedy",
+      "year": 1904,
+      "ftln_focus": ["1.2.129", "3.1.90", "4.4.34"],
+      "text": "The whole story turns upon the peculiar character of the hero. What, then, was Hamlet's state of mind? I would describe it as a state of profound melancholy. His nervous instability, his liability to sudden and extreme change of feeling, the half-sincerity of his self-reproaches — all these, and many other traits, point to the disorder. The direct cause was a moral shock: the sudden ghastly disclosure of his mother's true nature, falling on him when his heart was aching with love, and his body doubtless weakened by sorrow."
+    },
+    {
+      "id": "bradley-1904-gertrude",
+      "critic": "A. C. Bradley",
+      "work": "Shakespearean Tragedy",
+      "year": 1904,
+      "ftln_focus": ["3.4.35", "3.4.105"],
+      "text": "The Queen was not a bad-hearted woman, not at all the woman to think little of murder. But she had a soft animal nature, and was very dull and very shallow. She loved to be happy, like a sheep in the sun; and, to do her justice, it pleased her to see others happy, like more sheep in the sun. Her sensual nature and her want of penetration are the causes of her guilt, so far as she is guilty; there is no sign that she knew of the murder."
+    },
+    {
+      "id": "wilson-knight-1930-embassy",
+      "critic": "G. Wilson Knight",
+      "work": "The Wheel of Fire",
+      "year": 1930,
+      "ftln_focus": ["3.1.57", "3.1.121"],
+      "text": "Hamlet is an ambassador of death walking amid life. The consciousness of death, and consequent bitterness, cruelty, and inaction, are the theme of the play. Hamlet is inhuman in that he has seen through the tinsel of life and love, the pettiness of man; he stabs to death the enthusiasm for life, the religious faith, the humanistic and romantic ideals, of others. His disease — or vision — is primarily one of the emotions."
+    }
+  ]
+}
