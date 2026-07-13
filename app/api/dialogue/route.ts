@@ -34,14 +34,17 @@ function sse(event: string, data: unknown): string {
   return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
 }
 
-// The model slips em dashes past the prompt ban. Strip them outside quoted
-// spans (quoted play text must stay verbatim for the citation checker).
-function stripEmDashes(text: string): string {
+// The model slips em dashes and markdown asterisks past the prompt bans. Strip
+// them outside quoted spans (quoted play text must stay verbatim for the
+// citation checker). Asterisks never occur in the play text, so they go
+// everywhere: the client renders plain text and would show them literally.
+function cleanModelText(text: string): string {
   const parts = text.split(/(["“][^"”]*["”])/);
   return parts
     .map((part, i) => {
-      if (i % 2 === 1) return part; // quoted span, leave verbatim
+      if (i % 2 === 1) return part.replace(/\*/g, ""); // quoted span: only de-star
       return part
+        .replace(/\*/g, "")
         .replace(/\s*[—–]\s*/g, ", ")
         .replace(/,\s*,/g, ",")
         .replace(/([.!?:;])\s*,\s*/g, "$1 ");
@@ -225,13 +228,13 @@ export async function POST(req: NextRequest) {
 
   let text: string;
   try {
-    text = stripEmDashes(await anthropicText(system, messages));
+    text = cleanModelText(await anthropicText(system, messages));
   } catch (firstErr) {
     // Transient failures (rate limit, overloaded) get one retry, then an error.
     console.error("[dialogue] model call failed, retrying:", (firstErr as Error)?.message ?? firstErr);
     try {
       await new Promise((r) => setTimeout(r, 1200));
-      text = stripEmDashes(await anthropicText(system, messages));
+      text = cleanModelText(await anthropicText(system, messages));
     } catch (secondErr) {
       console.error("[dialogue] retry failed:", (secondErr as Error)?.message ?? secondErr);
       return new Response("The room went quiet a moment. Ask again.", { status: 503 });

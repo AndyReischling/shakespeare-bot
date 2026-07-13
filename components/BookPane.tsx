@@ -40,24 +40,34 @@ export default function BookPane({ activeRef, onAskAbout }: BookPaneProps) {
     return m;
   }, []);
 
-  // A citation chip: turn to the page holding the line…
-  useEffect(() => {
-    if (!activeRef) return;
-    const idx = sceneIndexOfRef[activeRef];
-    if (idx != null && idx !== pageIndex) setPageIndex(idx);
-  }, [activeRef, sceneIndexOfRef, pageIndex]);
+  // A citation jump happens ONCE per new activeRef. Manual paging must never be
+  // overridden: without this guard, the jump effect re-fired on every page turn
+  // and dragged the reader back to the last cited scene ("stuck on one scene").
+  const pendingScrollRef = useRef<string | null>(null);
+  const lastJumpedRef = useRef<string | null>(null);
 
-  // …then scroll to and flash it once the page is showing.
   useEffect(() => {
-    if (!activeRef) return;
-    const el = lineRefs.current[activeRef];
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      setFlash(activeRef);
-      const t = setTimeout(() => setFlash(null), 1500);
-      return () => clearTimeout(t);
-    }
-  }, [activeRef, pageIndex]);
+    if (!activeRef || activeRef === lastJumpedRef.current) return;
+    lastJumpedRef.current = activeRef;
+    pendingScrollRef.current = activeRef;
+    const idx = sceneIndexOfRef[activeRef];
+    if (idx != null) setPageIndex(idx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeRef]);
+
+  // Once the right page is rendered, scroll to and flash the pending line, then
+  // clear the request so later page turns are left alone.
+  useEffect(() => {
+    const ref = pendingScrollRef.current;
+    if (!ref) return;
+    const el = lineRefs.current[ref];
+    if (!el) return;
+    pendingScrollRef.current = null;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    setFlash(ref);
+    const t = setTimeout(() => setFlash(null), 1500);
+    return () => clearTimeout(t);
+  }, [pageIndex, activeRef]);
 
   const turn = (delta: number) => {
     setPageIndex((i) => Math.min(pages.length - 1, Math.max(0, i + delta)));

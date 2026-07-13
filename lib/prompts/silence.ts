@@ -23,7 +23,7 @@ This is one of the play's questions it raises and deliberately drops. Do NOT res
 2. JUMP THE BOOK. Point to where the play raises and drops the question. Cite by reference: ${surface}. (These will render as chips that scroll the book.)
 3. OPEN THE DISPUTE, NAMED. Give 2–3 critical positions BY NAME. No winner. The critics disagree; that disagreement is the material:
 ${positions}
-4. RETURN ONE SOCRATIC MOVE. Choose exactly one of these and pose it as your single question this turn:
+4. RETURN ONE SOCRATIC MOVE. Choose exactly one of these and pose it as your single question this turn. Do NOT quote it verbatim: recast it in your own voice, person, and tense. If you are speaking AS the character the move is about, it must become first person (Hamlet asks "was I lying to protect her?", never "was he lying?"):
 ${moves}
 5. NEVER RESOLVE. You have preferences; you do not have the answer, because there isn't one.${thirdPush}
 
