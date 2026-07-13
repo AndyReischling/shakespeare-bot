@@ -81,12 +81,25 @@ function TutorBio({ tutor }: { tutor: Tutor }) {
 // The faculty, built to scale: a compact tutor rail and one detail panel where
 // you choose that tutor's work. With no work chosen you are on the tutor's own
 // page (bio and Colloquy only); choosing a work opens the text-bound rooms.
-export function FacultyBrowser() {
-  const [tutorId, setTutorId] = useState(TUTORS[0].id);
-  const [workId, setWorkId] = useState<string | null>(null);
+export function FacultyBrowser({
+  onSelectionChange,
+}: {
+  onSelectionChange?: (tutor: Tutor, work: Work | null) => void;
+}) {
+  const [tutorId, setTutorIdState] = useState(TUTORS[0].id);
+  const [workId, setWorkIdState] = useState<string | null>(null);
   const tutor = TUTORS.find((t) => t.id === tutorId)!;
   const live = tutor.status === "live";
   const selectedWork: Work | null = tutor.works.find((w) => w.id === workId) ?? null;
+
+  const setTutorId = (id: string) => {
+    setTutorIdState(id);
+    onSelectionChange?.(TUTORS.find((t) => t.id === id)!, null);
+  };
+  const setWorkId = (id: string | null) => {
+    setWorkIdState(id);
+    onSelectionChange?.(tutor, tutor.works.find((w) => w.id === id) ?? null);
+  };
 
   return (
     <div>

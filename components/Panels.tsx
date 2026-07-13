@@ -6,9 +6,9 @@ import { TUTORS } from "@/lib/tutors";
 
 // Tutor switcher — this demo runs one tutor, but the platform hosts many. The
 // menu makes it clear you could move to another Socratic bot (Phase 2).
-function TutorSwitcher() {
+function TutorSwitcher({ currentName }: { currentName?: string }) {
   const [open, setOpen] = useState(false);
-  const current = TUTORS.find((t) => t.status === "live")!;
+  const label = (currentName ?? TUTORS.find((t) => t.status === "live")!.name).split(" ").slice(-1)[0];
   return (
     <div className="relative">
       <button
@@ -18,7 +18,7 @@ function TutorSwitcher() {
         aria-expanded={open}
       >
         <span className="worklabel text-work-glow">Tutor</span>
-        <span className="font-medium">{current.name.split(" ").slice(-1)[0]}</span>
+        <span className="font-medium">{label}</span>
         <span className="text-stage-faint">▾</span>
       </button>
       {open && (
@@ -110,7 +110,15 @@ function WorkSwitcher({ current = "Hamlet" }: { current?: string }) {
   );
 }
 
-export function Header({ subtitle, workLabel }: { subtitle?: string; workLabel?: string }) {
+export function Header({
+  subtitle,
+  workLabel,
+  tutorLabel,
+}: {
+  subtitle?: string;
+  workLabel?: string;
+  tutorLabel?: string;
+}) {
   return (
     <header className="relative z-50 flex items-center justify-between border-b border-stage-edge bg-stage-deep/70 px-4 py-2.5 backdrop-blur">
       <div className="flex items-baseline gap-3">
@@ -123,7 +131,7 @@ export function Header({ subtitle, workLabel }: { subtitle?: string; workLabel?:
         <Link href="/manual" className="btn-ghost">
           Manual
         </Link>
-        <TutorSwitcher />
+        <TutorSwitcher currentName={tutorLabel} />
         <WorkSwitcher current={workLabel} />
       </nav>
     </header>

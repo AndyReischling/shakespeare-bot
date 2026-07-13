@@ -67,10 +67,20 @@ export function ColloquyCard({ tutor }: { tutor: Tutor }) {
   );
 }
 
-export function TutorHome({ tutorId }: { tutorId: string }) {
+export function TutorHome({
+  tutorId,
+  onWorkChange,
+}: {
+  tutorId: string;
+  onWorkChange?: (w: Work | null) => void;
+}) {
   const tutor = TUTORS.find((t) => t.id === tutorId)!;
   const live = tutor.status === "live";
-  const [selected, setSelected] = useState<Work | null>(null);
+  const [selected, setSelectedState] = useState<Work | null>(null);
+  const setSelected = (w: Work | null) => {
+    setSelectedState(w);
+    onWorkChange?.(w);
+  };
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-12 sm:px-8">
