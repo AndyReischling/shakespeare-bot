@@ -64,11 +64,11 @@ export default function ManualPage() {
           </p>
           <p>
             <strong className="text-stage-ink">Colloquy</strong> is open conversation with the
-            author himself. Ask him anything at all: the meaning of life, whether love lasts, how
-            to face death, what ambition costs. He answers in character and always through his
-            work, citing Hamlet to the line and pointing at the rest of the canon by name, and he
-            will not hand down verdicts on the great questions. Expect the mirror held up, and one
-            pointed question back, aimed at you.
+            author himself, and the one room without the book open beside you. Ask him anything at
+            all: the meaning of life, whether love lasts, how to face death, what ambition costs.
+            He answers in character and always through his work, quoting and citing from the whole
+            canon, any play, any sonnet, and he will not hand down verdicts on the great questions.
+            Expect the mirror held up, and one pointed question back, aimed at you.
           </p>
         </Section>
 

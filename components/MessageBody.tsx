@@ -9,7 +9,12 @@ import React from "react";
 
 const REF_RE = /\b\d\.\d\.\d{1,3}\b/g;
 
-function renderLine(line: string, li: number, onCite?: (ref: string) => void): React.ReactNode[] {
+function renderLine(
+  line: string,
+  li: number,
+  onCite?: (ref: string) => void,
+  plainCites?: boolean,
+): React.ReactNode[] {
   let lastIndex = 0;
   let m: RegExpExecArray | null;
   const parts: React.ReactNode[] = [];
@@ -17,16 +22,25 @@ function renderLine(line: string, li: number, onCite?: (ref: string) => void): R
   while ((m = REF_RE.exec(line))) {
     if (m.index > lastIndex) parts.push(line.slice(lastIndex, m.index));
     const ref = m[0];
-    parts.push(
-      <button
-        key={`${li}-${m.index}`}
-        className="cite-chip"
-        onClick={() => onCite?.(ref)}
-        title={`Jump the book to ${ref}`}
-      >
-        {ref}
-      </button>,
-    );
+    if (plainCites) {
+      // Colloquy: no book pane to jump; references are styled text, not buttons.
+      parts.push(
+        <span key={`${li}-${m.index}`} className="font-mono text-[13px] text-work-glow">
+          {ref}
+        </span>,
+      );
+    } else {
+      parts.push(
+        <button
+          key={`${li}-${m.index}`}
+          className="cite-chip"
+          onClick={() => onCite?.(ref)}
+          title={`Jump the book to ${ref}`}
+        >
+          {ref}
+        </button>,
+      );
+    }
     lastIndex = m.index + ref.length;
   }
   if (lastIndex < line.length) parts.push(line.slice(lastIndex));
@@ -37,10 +51,12 @@ export function MessageBody({
   text,
   onCite,
   emphasizeQuestion = false,
+  plainCites = false,
 }: {
   text: string;
   onCite?: (ref: string) => void;
   emphasizeQuestion?: boolean;
+  plainCites?: boolean;
 }) {
   const lines = text.split("\n");
 
@@ -57,7 +73,7 @@ export function MessageBody({
   }
 
   const nodes: React.ReactNode[] = lines.map((line, li) => {
-    const parts = renderLine(line, li, onCite);
+    const parts = renderLine(line, li, onCite, plainCites);
     if (li === questionIdx) {
       return (
         <p

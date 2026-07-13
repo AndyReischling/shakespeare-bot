@@ -114,9 +114,13 @@ export default function Room({
         </div>
       )}
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 md:grid-cols-2">
-        {/* LEFT — dialogue */}
-        <div className="flex min-h-0 flex-col border-r border-stage-edge">
+      <div className={`grid min-h-0 flex-1 grid-cols-1 ${mode === "colloquy" ? "" : "md:grid-cols-2"}`}>
+        {/* LEFT — dialogue (full width in colloquy: no book open beside him) */}
+        <div
+          className={`flex min-h-0 flex-col ${
+            mode === "colloquy" ? "mx-auto w-full max-w-3xl" : "border-r border-stage-edge"
+          }`}
+        >
           {titleCard && (
             <div className="border-b border-stage-edge bg-stage-panel/60 px-4 py-3">
               <div className="flex items-center justify-between gap-3">
@@ -220,7 +224,8 @@ export default function Room({
                   )}
                   <MessageBody
                     text={m.content}
-                    onCite={setActiveRef}
+                    onCite={mode === "colloquy" ? undefined : setActiveRef}
+                    plainCites={mode === "colloquy"}
                     emphasizeQuestion={m.role === "assistant" && !m.streaming}
                   />
                   {m.streaming && <span className="ml-0.5 inline-block animate-pulse">▍</span>}
@@ -285,10 +290,12 @@ export default function Room({
           </form>
         </div>
 
-        {/* RIGHT — the open book */}
-        <div className="hidden min-h-0 md:block">
-          <BookPane activeRef={activeRef} onAskAbout={(ref, text) => doSend(`What about this line — ${ref}? "${text}"`)} />
-        </div>
+        {/* RIGHT — the open book (all modes but Colloquy) */}
+        {mode !== "colloquy" && (
+          <div className="hidden min-h-0 md:block">
+            <BookPane activeRef={activeRef} onAskAbout={(ref, text) => doSend(`What about this line — ${ref}? "${text}"`)} />
+          </div>
+        )}
       </div>
     </div>
   );
