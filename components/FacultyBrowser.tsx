@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { TUTORS } from "@/lib/tutors";
+import { TUTORS, Tutor, Work } from "@/lib/tutors";
 import { WelcomeAudio } from "./WelcomeAudio";
+import { ColloquyCard } from "./TutorHome";
 
 const doors = [
   {
@@ -44,15 +45,47 @@ const doors = [
   },
 ];
 
-// The faculty, built to scale: a compact tutor rail (holds dozens of tutors;
-// scrolls horizontally) and one detail panel where you choose that tutor's
-// work. Everything below the rail follows the selection: the live tutor shows
-// their welcome and rooms; a tutor who isn't staged in this demo says so
-// honestly instead of silently showing someone else's rooms.
+// The tutor met on their own terms, before any work is chosen: who they are,
+// what they're known for, and the one room that needs no text on the table.
+function TutorBio({ tutor }: { tutor: Tutor }) {
+  const live = tutor.status === "live";
+  return (
+    <div className="mt-14 animate-worklight-in">
+      <p className="worklabel mb-1">The tutor</p>
+      <h2 className="display text-3xl font-medium text-stage-ink">{tutor.name}</h2>
+      <div className="mt-5 grid gap-6 md:grid-cols-[1.5fr_1fr]">
+        <div>
+          <p className="text-[15px] leading-relaxed text-stage-dim">{tutor.bio}</p>
+          <p className="worklabel mt-6 mb-2 text-stage-faint">Known for</p>
+          <ul className="space-y-1.5">
+            {tutor.knownFor.map((k) => (
+              <li key={k} className="text-[14px] leading-relaxed text-stage-dim">
+                <span className="mr-2 text-work-glow">·</span>
+                {k}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-sm text-stage-faint">
+            {live
+              ? "Choose a work above to open the Rehearsal Room, Encounters, and the Case."
+              : "This tutor is authored the same way as the live tutor and is not staged in this demo."}
+          </p>
+        </div>
+        <ColloquyCard tutor={tutor} />
+      </div>
+    </div>
+  );
+}
+
+// The faculty, built to scale: a compact tutor rail and one detail panel where
+// you choose that tutor's work. With no work chosen you are on the tutor's own
+// page (bio and Colloquy only); choosing a work opens the text-bound rooms.
 export function FacultyBrowser() {
   const [tutorId, setTutorId] = useState(TUTORS[0].id);
+  const [workId, setWorkId] = useState<string | null>(null);
   const tutor = TUTORS.find((t) => t.id === tutorId)!;
   const live = tutor.status === "live";
+  const selectedWork: Work | null = tutor.works.find((w) => w.id === workId) ?? null;
 
   return (
     <div>
@@ -70,7 +103,10 @@ export function FacultyBrowser() {
                 key={t.id}
                 role="tab"
                 aria-selected={active}
-                onClick={() => setTutorId(t.id)}
+                onClick={() => {
+                  setTutorId(t.id);
+                  setWorkId(null);
+                }}
                 className={`shrink-0 rounded-full px-3.5 py-1.5 text-[13px] transition-colors ${
                   active
                     ? "bg-work-light/25 font-semibold text-work-glow"
@@ -102,23 +138,28 @@ export function FacultyBrowser() {
           <div>
             <p className="worklabel mb-2 text-stage-faint">Choose a work</p>
             <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-              {tutor.works.map((w) =>
-                w.live ? (
-                  <a
+              {tutor.works.map((w) => {
+                const isSelected = selectedWork?.id === w.id;
+                return w.live ? (
+                  <button
                     key={w.id}
-                    href="#rooms"
-                    className="group rounded-lg border border-work-deep bg-work-light/10 p-3 transition-colors hover:bg-work-light/20"
+                    onClick={() => setWorkId(isSelected ? null : w.id)}
+                    className={`rounded-lg border p-3 text-left transition-colors ${
+                      isSelected
+                        ? "border-work-deep bg-work-light/25"
+                        : "border-work-deep bg-work-light/10 hover:bg-work-light/20"
+                    }`}
                   >
-                    <div className="display text-[15px] font-medium leading-tight text-stage-ink group-hover:text-work-glow">
+                    <div className="display text-[15px] font-medium leading-tight text-stage-ink">
                       {w.title}
                     </div>
                     <div className="mt-1 flex items-center justify-between">
                       <span className="text-[11px] text-stage-faint">{w.kind}</span>
                       <span className="rounded-full bg-work-light/25 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] text-work-glow">
-                        Live
+                        {isSelected ? "Chosen" : "Live"}
                       </span>
                     </div>
-                  </a>
+                  </button>
                 ) : (
                   <div
                     key={w.id}
@@ -128,25 +169,27 @@ export function FacultyBrowser() {
                     <div className="display text-[15px] leading-tight text-stage-dim">{w.title}</div>
                     <div className="mt-1 text-[11px] text-stage-faint">{w.kind}</div>
                   </div>
-                ),
-              )}
+                );
+              })}
             </div>
             {live && (
               <p className="mt-3 text-[12px] text-stage-faint">
-                One work is live in this demo. Choosing it takes you to the rooms below.
+                {selectedWork
+                  ? `${selectedWork.title} is on the table. The rooms are open below.`
+                  : "No work chosen yet. Only the Colloquy is open; choose a work to open the rest."}
               </p>
             )}
           </div>
         </div>
       </div>
 
-      {/* Below the rail, the page follows the selection. */}
-      {live ? (
+      {/* Below the rail: the tutor's own page, or the chosen work's rooms. */}
+      {live && selectedWork ? (
         <>
-          <div id="rooms" className="mt-14 scroll-mt-16">
+          <div id="rooms" className="mt-14 scroll-mt-16 animate-worklight-in">
             <p className="worklabel mb-1">Today&apos;s tutor</p>
             <h2 className="display text-3xl font-medium text-stage-ink">
-              {tutor.name} · {tutor.work}
+              {tutor.name} · {selectedWork.title}
             </h2>
             <div className="mt-5">
               <WelcomeAudio />
@@ -189,23 +232,7 @@ export function FacultyBrowser() {
           </div>
         </>
       ) : (
-        <div id="rooms" className="mt-14 scroll-mt-16">
-          <div className="rounded-xl border border-dashed border-stage-edge bg-stage-panel/30 px-8 py-12 text-center">
-            <p className="worklabel text-stage-faint">{tutor.room}</p>
-            <h2 className="display mt-2 text-3xl font-medium text-stage-ink">The room is dark tonight.</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-stage-dim">
-              {tutor.name} is authored the same way as the live tutor: their own texts on screen,
-              their own hand-built refusal map, their own rooms. This demo stages one mind, and
-              tonight the stage belongs to Shakespeare.
-            </p>
-            <button
-              className="btn-work mt-6"
-              onClick={() => setTutorId(TUTORS.find((t) => t.status === "live")!.id)}
-            >
-              Return to the live tutor
-            </button>
-          </div>
-        </div>
+        <TutorBio tutor={tutor} />
       )}
     </div>
   );

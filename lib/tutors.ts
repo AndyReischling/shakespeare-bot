@@ -18,6 +18,8 @@ export interface Tutor {
   status: "live" | "planned";
   href?: string;
   blurb: string;
+  bio: string; // who the tutor is, met on their own page before any work is chosen
+  knownFor: string[]; // what the tutor is known for
   skin: string; // the case container's native skin for this tutor
   works: Work[]; // the catalog: same process, different work
 }
@@ -31,6 +33,13 @@ export const TUTORS: Tutor[] = [
     status: "live",
     href: "/",
     blurb: "A working director in his own playhouse, teaching the play by making you stage it.",
+    bio: "Born in Stratford-upon-Avon in 1564, a glover's son who left for the London playhouses and never looked back. Actor, playwright, and shareholder in the Lord Chamberlain's Men, he wrote for a stage he part-owned, the Globe, and retired a gentleman of property. He was a commercial writer to the bone: he wrote what the players could play and what the pit would pay to hear.",
+    knownFor: [
+      "38 plays and 154 sonnets",
+      "Hamlet, King Lear, Macbeth, Othello",
+      "Characters who think out loud in verse",
+      "The largest working vocabulary in English letters",
+    ],
     skin: "Trial · The Crown v. Hamlet",
     works: [
       { id: "hamlet", title: "Hamlet", kind: "Tragedy", live: true },
@@ -51,6 +60,13 @@ export const TUTORS: Tutor[] = [
     room: "The Academy",
     status: "planned",
     blurb: "Elenchus in the garden — the original case container: commit, be refuted, arrive at aporia.",
+    bio: "Born to an aristocratic Athenian family around 427 BC, he met Socrates young and never recovered. After his teacher's execution he wrote philosophy as drama: dialogues in which ideas are tested by cross-examination rather than declared. He founded the Academy, the first enduring school of the Western world.",
+    knownFor: [
+      "The Socratic dialogues",
+      "The Republic and the theory of forms",
+      "The Academy",
+      "Philosophy written as cross-examination",
+    ],
     skin: "Dialogue · the elenchus",
     works: [
       { id: "republic", title: "The Republic", kind: "Dialogue" },
@@ -68,6 +84,13 @@ export const TUTORS: Tutor[] = [
     room: "The Lyceum",
     status: "planned",
     blurb: "A walking argument toward the mean, testing your judgment case by case.",
+    bio: "Born in Stagira in 384 BC, he spent twenty years in Plato's Academy, tutored Alexander the Great, and founded his own school, the Lyceum, where students argued while walking. He preferred evidence to inspiration: he catalogued constitutions, dissected animals, and treated ethics as a craft learned by practice.",
+    knownFor: [
+      "The Nicomachean Ethics",
+      "The Poetics, the first theory of drama",
+      "Formal logic",
+      "Teaching by walking and questioning",
+    ],
     skin: "Deliberation · toward the mean",
     works: [
       { id: "ethics", title: "Nicomachean Ethics", kind: "Treatise" },

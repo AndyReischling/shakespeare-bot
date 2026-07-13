@@ -29,7 +29,7 @@ const WORK_ROOMS = [
   },
 ];
 
-function ColloquyCard({ tutor }: { tutor: Tutor }) {
+export function ColloquyCard({ tutor }: { tutor: Tutor }) {
   const live = tutor.status === "live";
   const firstName = tutor.name.split(" ").slice(-1)[0];
   const inner = (
@@ -74,15 +74,24 @@ export function TutorHome({ tutorId }: { tutorId: string }) {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-12 sm:px-8">
-      {/* Hero */}
+      {/* Hero: who the tutor is, before any work is chosen */}
       <div className="animate-worklight-in">
         <p className="worklabel mb-2">{tutor.room}</p>
         <h1 className="display text-4xl font-medium leading-tight text-stage-ink sm:text-6xl">
           {tutor.name}
         </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-stage-dim">{tutor.blurb}</p>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-stage-dim">{tutor.bio}</p>
+        <p className="worklabel mt-6 mb-2 text-stage-faint">Known for</p>
+        <ul className="max-w-2xl space-y-1.5">
+          {tutor.knownFor.map((k) => (
+            <li key={k} className="text-[14px] leading-relaxed text-stage-dim">
+              <span className="mr-2 text-work-glow">·</span>
+              {k}
+            </li>
+          ))}
+        </ul>
         {!live && (
-          <p className="mt-2 max-w-2xl text-sm text-stage-faint">
+          <p className="mt-4 max-w-2xl text-sm text-stage-faint">
             Authored the same way as the live tutor; not staged in this demo.
           </p>
         )}
