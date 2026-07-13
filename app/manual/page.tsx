@@ -44,11 +44,15 @@ export default function ManualPage() {
             question per turn: a staging choice, a word choice, the meter, a counter-scene.
           </p>
           <p>
-            <strong className="text-stage-ink">Encounters</strong> are interrogation. You question
-            his characters directly: Hamlet, Gertrude, Claudius, Ophelia, the Ghost, Horatio,
-            Laertes. Each knows only what the text lets them witness, and answers only what the
-            lines license. Ask a character to explain what the play leaves dark and they will
-            perform the withholding rather than invent an answer. Use{" "}
+            <strong className="text-stage-ink">Encounters</strong> are interrogation. Each
+            character introduces themselves first, in their own voice, and then you question them
+            directly: Hamlet, Gertrude, Claudius, Ophelia, the Ghost, Horatio, Laertes. You may put
+            any line of the play to them, from any scene. Lines from scenes they stood in, they
+            answer from inside the memory. Lines from scenes they never saw, they react to as the
+            character would on first hearing: recognition, denial, wonder, anger. They never claim
+            to have witnessed what they did not, and the reaction is the performance. Ask a
+            character to explain what the play leaves dark and they will perform the withholding
+            rather than invent an answer. Use{" "}
             <strong className="text-stage-ink">STOP SCENE</strong> to break the frame and get the
             playwright back; ask &ldquo;how else could that line be played?&rdquo; and he steps
             forward with competing stagings.

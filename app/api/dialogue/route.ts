@@ -106,12 +106,12 @@ export async function POST(req: NextRequest) {
   const refusal = match.entry ?? null;
   const pushCount = refusal ? countPush(history, refusal.id) : 0;
 
-  // 2. Retrieval (dual-index; filtered for the encounter knowledge boundary).
-  const passages = isOpening
-    ? []
-    : mode === "encounter" && character
-      ? retrievePassages(input, { witnessedScenes: scenesWitnessedBy(character), onlyCharacterKnows: character, topK: 5 })
-      : retrievePassages(input, { topK: 5 });
+  // 2. Retrieval (dual-index). Encounters retrieve from the WHOLE play: any line
+  //    may be put to a character. The knowledge boundary is enforced as
+  //    perspective in the prompt (witnessed scenes listed there), not as a
+  //    retrieval wall, so unwitnessed lines get an in-character reaction rather
+  //    than a blank.
+  const passages = isOpening ? [] : retrievePassages(input, { topK: 5 });
   const criticism = isOpening ? [] : retrieveCriticism(input, 3);
   const pointers = isOpening ? [] : retrievePointers(refusal ? refusal.id : input, 2);
 
@@ -123,6 +123,14 @@ export async function POST(req: NextRequest) {
 
   if (mode === "encounter") {
     ctx.character = character;
+    if (character) {
+      const witnessed = Array.from(scenesWitnessedBy(character)).sort((a, b) => {
+        const [aa, as] = a.split(".").map(Number);
+        const [ba, bs] = b.split(".").map(Number);
+        return aa - ba || as - bs;
+      });
+      ctx.characterSceneNote = `For thy reckoning, the scenes ${character} stands in are: ${witnessed.join(", ")}. All else is unwitnessed.`;
+    }
     system = buildEncounterPrompt(ctx);
   } else if (mode === "case") {
     const s = loadSkin((skin ?? "trial") as Skin);
@@ -154,7 +162,7 @@ export async function POST(req: NextRequest) {
       mode === "colloquy"
         ? `OPENING TURN: The student has just sat down with thee, not to study the play but to talk with the man. Welcome them in two or three sentences. Tell them plainly: ask what they will, of life or love or death or anything; thou wilt answer from what thou hast staged, and thou wilt hand every great question back sharpened. End by inviting their first question. No line references in the greeting.`
         : mode === "encounter"
-        ? `OPENING TURN: The student has just entered. Greet them AS ${character ?? "the character"}, in character and in period voice, in three sentences or fewer. Let them feel thy limits: thou knowest only what thou hast witnessed in the play. End by inviting their question. Do not cite line references in this greeting.`
+        ? `OPENING TURN: The student has just entered, and ${character ?? "the character"} must INTRODUCE THEMSELVES, fully in character and in their own voice: who they are by name and station, where they stand in the story as they understand it now, and their present state of mind. Let the introduction carry the character's temperament (their wit, their guard, their heat, their grief). Then invite the student to ask what they will, or to point at any line of the play. Five or six sentences. Do not cite line references in this greeting.`
         : mode === "case"
           ? `OPENING TURN: Open the court in thy judge's voice. Name the case and the matter (the killing of Polonius, 3.4). Say plainly that thou triest the argument, not the Prince's soul. Direct them: choose a side and a theory above, then deliver an opening statement of one hundred and fifty words or fewer, which thou wilt rule textually arguable or not. Under 110 words.`
           : `OPENING TURN: The student has just entered thy rehearsal room for the first time. Give thy welcome in thine own words, and in it make three rules plain: thou speakest from the text and wilt show the line for every claim; some questions the play refuses of purpose, and there thou refusest too, offering the critics' quarrel instead of a guess; and thou wilt neither summarize the play nor write a word in the student's stead. End by asking what scene we work. Under 130 words.`;
