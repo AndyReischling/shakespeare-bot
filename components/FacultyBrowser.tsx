@@ -52,11 +52,12 @@ function TutorBio({ tutor }: { tutor: Tutor }) {
   return (
     <div className="mt-14 animate-worklight-in">
       <p className="worklabel mb-1">The tutor</p>
-      <h2 className="display text-3xl font-medium text-stage-ink">{tutor.name}</h2>
-      <div className="mt-5 grid gap-6 md:grid-cols-[1.5fr_1fr]">
+      <h2 className="display text-4xl font-medium text-stage-ink">{tutor.name}</h2>
+      <div className="mt-6 grid gap-8 md:grid-cols-[1.5fr_1fr]">
         <div>
+          <p className="worklabel mb-2 text-stage-faint">Who he is</p>
           <p className="text-[15px] leading-relaxed text-stage-dim">{tutor.bio}</p>
-          <p className="worklabel mt-6 mb-2 text-stage-faint">Known for</p>
+          <p className="worklabel mt-7 mb-2 text-stage-faint">Why he matters</p>
           <ul className="space-y-1.5">
             {tutor.knownFor.map((k) => (
               <li key={k} className="text-[14px] leading-relaxed text-stage-dim">
@@ -65,9 +66,9 @@ function TutorBio({ tutor }: { tutor: Tutor }) {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-sm text-stage-faint">
+          <p className="mt-7 text-sm text-stage-faint">
             {live
-              ? "Choose a work above to open the Rehearsal Room, Encounters, and the Case."
+              ? "To work a text with him, choose a work above. To simply talk, the Colloquy is open."
               : "This tutor is authored the same way as the live tutor and is not staged in this demo."}
           </p>
         </div>
@@ -143,11 +144,20 @@ export function FacultyBrowser() {
                 return w.live ? (
                   <button
                     key={w.id}
-                    onClick={() => setWorkId(isSelected ? null : w.id)}
+                    onClick={() => {
+                      const next = isSelected ? null : w.id;
+                      setWorkId(next);
+                      if (next) {
+                        // Show that something happened: bring the opened rooms into view.
+                        requestAnimationFrame(() => {
+                          document.getElementById("rooms")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                        });
+                      }
+                    }}
                     className={`rounded-lg border p-3 text-left transition-colors ${
                       isSelected
                         ? "border-work-deep bg-work-light/25"
-                        : "border-work-deep bg-work-light/10 hover:bg-work-light/20"
+                        : "border-stage-edge bg-stage-panel hover:border-work-deep hover:bg-work-light/10"
                     }`}
                   >
                     <div className="display text-[15px] font-medium leading-tight text-stage-ink">
@@ -155,7 +165,11 @@ export function FacultyBrowser() {
                     </div>
                     <div className="mt-1 flex items-center justify-between">
                       <span className="text-[11px] text-stage-faint">{w.kind}</span>
-                      <span className="rounded-full bg-work-light/25 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] text-work-glow">
+                      <span
+                        className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] ${
+                          isSelected ? "bg-work-deep text-stage-panel" : "bg-work-light/25 text-work-glow"
+                        }`}
+                      >
                         {isSelected ? "Chosen" : "Live"}
                       </span>
                     </div>
