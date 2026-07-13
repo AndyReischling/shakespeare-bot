@@ -127,8 +127,9 @@ export function Header({
   return (
     <header className="relative z-50 flex items-center justify-between border-b border-stage-edge bg-stage-deep/70 px-4 py-2.5 backdrop-blur">
       <div className="flex items-baseline gap-3">
+        {/* The brand is the place: whichever tutor's room you are standing in. */}
         <Link href="/" className="display text-base font-medium tracking-tight text-stage-ink">
-          The Rehearsal Room
+          {tutor.room}
         </Link>
         {subtitle && <span className="hidden text-[12px] uppercase tracking-[0.14em] text-stage-faint md:inline">{subtitle}</span>}
       </div>

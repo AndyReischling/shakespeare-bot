@@ -18,7 +18,7 @@ export default function WorkPage({ params }: { params: { id: string; work: strin
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header subtitle={tutor.room} tutorId={tutor.id} workLabel={work.title} />
+      <Header tutorId={tutor.id} workLabel={work.title} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-12 sm:px-8">
         <WorkRooms tutorName={tutor.name} workTitle={work.title} />
         <p className="mt-10 text-sm text-stage-faint">
