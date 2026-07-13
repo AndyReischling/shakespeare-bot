@@ -78,6 +78,8 @@ export interface RetrievedPassage {
   text: string;
   score: number;
   scene: string;
+  // Encounter mode: whether the current character stood in this passage's scene.
+  witnessed?: boolean;
 }
 
 export interface ChatTurn {

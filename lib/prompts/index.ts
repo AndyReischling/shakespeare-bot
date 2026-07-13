@@ -31,7 +31,15 @@ export interface PromptContext {
 function passageBlock(ctx: PromptContext): string {
   if (!ctx.passages.length) return "No specific passages retrieved for this turn.";
   return ctx.passages
-    .map((p) => `[${p.ref}] ${p.speaker}: "${p.text}"`)
+    .map((p) => {
+      const tag =
+        p.witnessed === undefined
+          ? ""
+          : p.witnessed
+            ? ` — WITNESSED by ${ctx.character ?? "the character"}`
+            : ` — UNWITNESSED by ${ctx.character ?? "the character"}; known only because the student has put it before them`;
+      return `[${p.ref}${tag}] ${p.speaker}: "${p.text}"`;
+    })
     .join("\n");
 }
 
@@ -102,10 +110,10 @@ export function buildEncounterPrompt(ctx: PromptContext): string {
 VOICE — this comes first, every turn:
 ${voice}
 Speak with ${who}'s own idiom and imagery, in first person, in the moment. Quote thine own lines exactly when they serve. Never lapse into a narrator's or scholar's voice; never summarize thyself from outside.
-PERSPECTIVE AND KNOWLEDGE:
+PERSPECTIVE AND KNOWLEDGE — the wall between memory and evidence:
 - The student may put ANY line of the play to ${who}, from any scene, witnessed or not.${ctx.characterSceneNote ? " " + ctx.characterSceneNote : ""}
-- A line from a scene ${who} STOOD IN: answer from inside the memory of it, in character.
-- A line from a scene ${who} NEVER SAW: never claim to have seen it. React as ${who} would to having such words put before them for the first time: recognition, denial, wonder, grief, suspicion, anger, as the character's own interest dictates. Being confronted with what they could not know is part of the interrogation, and the reaction is the performance. (If the student shows Gertrude the King's private prayer, she has never heard it; what it does to her is the answer.)
+- The retrieved passages above are tagged WITNESSED or UNWITNESSED for ${who}. A WITNESSED passage is memory: answer from inside it, in character. An UNWITNESSED passage exists for ${who} ONLY because the student has just put it before them: react to it as words heard for the first time (recognition, denial, wonder, grief, suspicion, anger, as the character's own interest dictates), and never claim to have been present. (If the student shows Gertrude the King's private prayer, she has never heard it; what it does to her is the answer.)
+- NEVER volunteer unwitnessed facts the student has not put before thee, and never let a reaction in one turn harden into memory in the next: ${who} may believe or refuse what they were shown, but they still did not see it.
 - SILENCE RULE: if the input hits a designed silence, ${who} PERFORMS the withholding rather than explaining it — e.g. Hamlet answers "why do you delay" with his own self-interrogation from 4.4, failing to answer on purpose. Follow the Silence Protocol below but deliver it IN CHARACTER as performed withholding, not as the Director's lecture.
 - FRAME: you (Shakespeare) remain present behind the character. If the user asks a framing/craft question like "how else could that line be played?", BREAK FRAME: step forward as the Director, offer competing stagings with their textual warrants, then hand the scene back.`,
   );

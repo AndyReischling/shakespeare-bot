@@ -10,7 +10,7 @@ import {
   retrieveCriticism,
   retrievePointers,
 } from "@/lib/retrieval";
-import { scenesWitnessedBy } from "@/lib/corpus";
+import { scenesWitnessedBy, getLineByRef } from "@/lib/corpus";
 import {
   buildRehearsalPrompt,
   buildEncounterPrompt,
@@ -23,7 +23,7 @@ import { verifyOutput, correctionInstruction, extractCitations } from "@/lib/tex
 import { deliver } from "@/lib/prompts/delivery";
 import { checkAccess, checkRate, checkDailyCap, noteApiCall, clientIp } from "@/lib/ops";
 import { logTurn } from "@/lib/log";
-import type { DialogueRequest, ChatTurn, Register, Skin } from "@/lib/types";
+import type { DialogueRequest, ChatTurn, Register, Skin, RetrievedPassage } from "@/lib/types";
 
 export const runtime = "nodejs";
 // Turns take 10–20s to generate; Vercel's default function limit (10s) would
@@ -106,12 +106,50 @@ export async function POST(req: NextRequest) {
   const refusal = match.entry ?? null;
   const pushCount = refusal ? countPush(history, refusal.id) : 0;
 
-  // 2. Retrieval (dual-index). Encounters retrieve from the WHOLE play: any line
-  //    may be put to a character. The knowledge boundary is enforced as
-  //    perspective in the prompt (witnessed scenes listed there), not as a
-  //    retrieval wall, so unwitnessed lines get an in-character reaction rather
-  //    than a blank.
-  const passages = isOpening ? [] : retrievePassages(input, { topK: 5 });
+  // 2. Retrieval (dual-index). In Encounters the knowledge boundary is two-layer
+  //    so characters never drift into omniscient narrators:
+  //    - On an ordinary question, retrieval stays inside the character's
+  //      witnessed world; unwitnessed material never even reaches their context.
+  //    - Only when the reader EXPLICITLY puts a line to them (a reference or a
+  //      quotation, i.e. a deliberate confrontation) is whole-play retrieval
+  //      allowed, and every passage is tagged WITNESSED / UNWITNESSED so memory
+  //      cannot blur into presented evidence.
+  let passages: RetrievedPassage[] = [];
+  if (!isOpening) {
+    if (mode === "encounter" && character) {
+      const witnessedSet = scenesWitnessedBy(character);
+      const confronting =
+        /\b\d\.\d\.\d{1,3}\b/.test(input) || /["“][^"”]{4,}["”]/.test(input);
+      passages = confronting
+        ? retrievePassages(input, { topK: 5 })
+        : retrievePassages(input, {
+            witnessedScenes: witnessedSet,
+            onlyCharacterKnows: character,
+            topK: 5,
+          });
+      // Guarantee explicitly referenced lines are on the table, whoever spoke them.
+      const refs = input.match(/\b\d\.\d\.\d{1,3}\b/g) ?? [];
+      for (const r of refs) {
+        if (passages.some((p) => p.ref === r)) continue;
+        const l = getLineByRef(r);
+        if (l) {
+          passages.unshift({
+            ftln: l.ftln,
+            ref: l.ref,
+            speaker: l.speaker,
+            text: l.text,
+            score: 1,
+            scene: `${l.act}.${l.scene}`,
+          });
+        }
+      }
+      passages = passages
+        .slice(0, 6)
+        .map((p) => ({ ...p, witnessed: witnessedSet.has(p.scene) }));
+    } else {
+      passages = retrievePassages(input, { topK: 5 });
+    }
+  }
   const criticism = isOpening ? [] : retrieveCriticism(input, 3);
   const pointers = isOpening ? [] : retrievePointers(refusal ? refusal.id : input, 2);
 
