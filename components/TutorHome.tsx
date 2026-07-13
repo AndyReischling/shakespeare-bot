@@ -37,7 +37,7 @@ export function ColloquyCard({ tutor }: { tutor: Tutor }) {
       <div className="flex items-center justify-between">
         <span className="worklabel text-work-glow">Always open · no work required</span>
         {live && (
-          <span className="rounded-full bg-work-light/25 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-work-glow">
+          <span className="rounded-full bg-accent-yellow px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-stage-ink">
             Live
           </span>
         )}
@@ -120,16 +120,16 @@ export function TutorHome({ tutorId }: { tutorId: string }) {
                 onClick={() => setSelected(isSelected ? null : w)}
                 className={`rounded-lg border p-3 text-left transition-colors ${
                   isSelected
-                    ? "border-work-deep bg-work-light text-stage-ink shadow-sm"
+                    ? "border-work-light bg-work-light shadow-sm"
                     : "border-stage-edge bg-stage-panel hover:border-work-deep"
                 }`}
               >
-                <div className="display text-[15px] font-medium leading-tight text-stage-ink">{w.title}</div>
+                <div className={`display text-[15px] font-medium leading-tight ${isSelected ? "text-white" : "text-stage-ink"}`}>{w.title}</div>
                 <div className="mt-1 flex items-center justify-between">
-                  <span className={`text-[11px] ${isSelected ? "text-stage-ink/70" : "text-stage-faint"}`}>{w.kind}</span>
+                  <span className={`text-[11px] ${isSelected ? "text-white/75" : "text-stage-faint"}`}>{w.kind}</span>
                   <span
                     className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] ${
-                      isSelected ? "bg-stage-ink text-work-glow" : "bg-work-light/25 text-work-glow"
+                      isSelected ? "bg-stage-ink text-white" : "bg-accent-yellow text-stage-ink"
                     }`}
                   >
                     {isSelected ? "Chosen ✓" : "Live"}

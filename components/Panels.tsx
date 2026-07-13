@@ -36,7 +36,7 @@ function TutorSwitcher() {
                       <div className="text-[12px] text-stage-dim">{t.blurb}</div>
                     </div>
                     {live && (
-                      <span className="mt-0.5 shrink-0 rounded-full bg-work-light/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-work-glow">
+                      <span className="mt-0.5 shrink-0 rounded-full bg-accent-yellow px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-stage-ink">
                         Live
                       </span>
                     )}

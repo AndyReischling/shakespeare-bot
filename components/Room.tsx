@@ -243,7 +243,7 @@ export default function Room({
           {/* Chips (§4.4) */}
           <div className="flex flex-wrap gap-2 border-t border-stage-edge px-4 py-2.5">
             {mode === "encounter" && (
-              <button className="prompt-chip border-work-deep/50 text-work-glow" onClick={() => doSend("STOP SCENE")}>
+              <button className="prompt-chip border-accent-orange/60 text-accent-orange hover:border-accent-orange" onClick={() => doSend("STOP SCENE")}>
                 STOP SCENE
               </button>
             )}

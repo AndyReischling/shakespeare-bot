@@ -117,7 +117,7 @@ export function FacultyBrowser() {
               >
                 {t.name}
                 {t.status === "live" && (
-                  <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-work-deep align-middle" aria-label="live" />
+                  <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-accent-orange align-middle" aria-label="live" />
                 )}
               </button>
             );
@@ -161,20 +161,20 @@ export function FacultyBrowser() {
                     }}
                     className={`rounded-lg border p-3 text-left transition-colors ${
                       isSelected
-                        ? "border-work-deep bg-work-light text-stage-ink shadow-sm"
+                        ? "border-work-light bg-work-light shadow-sm"
                         : "border-stage-edge bg-stage-panel hover:border-work-deep"
                     }`}
                   >
-                    <div className="display text-[15px] font-medium leading-tight text-stage-ink">
+                    <div className={`display text-[15px] font-medium leading-tight ${isSelected ? "text-white" : "text-stage-ink"}`}>
                       {w.title}
                     </div>
                     <div className="mt-1 flex items-center justify-between">
-                      <span className={`text-[11px] ${isSelected ? "text-stage-ink/70" : "text-stage-faint"}`}>
+                      <span className={`text-[11px] ${isSelected ? "text-white/75" : "text-stage-faint"}`}>
                         {w.kind}
                       </span>
                       <span
                         className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] ${
-                          isSelected ? "bg-stage-ink text-work-glow" : "bg-work-light/25 text-work-glow"
+                          isSelected ? "bg-stage-ink text-white" : "bg-accent-yellow text-stage-ink"
                         }`}
                       >
                         {isSelected ? "Chosen ✓" : "Live"}

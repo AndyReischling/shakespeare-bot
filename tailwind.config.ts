@@ -11,27 +11,32 @@ const config: Config = {
     extend: {
       colors: {
         stage: {
-          black: "#ece4cf", // app background — Norton cream
-          deep: "#e4dbc0", // header / sunken inputs
-          panel: "#f5efe0", // raised cards / panels
-          edge: "#d4caae", // hairline borders on cream
-          ink: "#1c1913", // primary text — warm near-black
-          dim: "#4a4536", // secondary text
-          faint: "#8a8069", // tertiary text / tracked labels
+          black: "#ffffff", // app background — white gallery wall
+          deep: "#f6f6f3", // header / sunken inputs
+          panel: "#fbfbf9", // raised cards / panels
+          edge: "#e4e4de", // hairline borders on white
+          ink: "#161513", // primary text — near-black
+          dim: "#4b4a45", // secondary text
+          faint: "#8b8a82", // tertiary text / tracked labels
         },
         work: {
-          // Norton periwinkle / cornflower — the one loud color.
-          light: "#6b83f6", // accent fills & full-bleed blocks
-          glow: "#3949c4", // deeper periwinkle for accent text that must read on cream
-          deep: "#586fe6", // periwinkle for borders / hovers
+          // Norton campaign cobalt — the primary accent, used sparingly.
+          light: "#2c43df", // accent fills (chosen cards, primary buttons)
+          glow: "#1f33bd", // deep cobalt for accent text on white
+          deep: "#2c43df", // borders / hovers
+        },
+        accent: {
+          // The rest of the campaign palette, restrained: single small moments.
+          orange: "#f2621f",
+          yellow: "#ffc51f",
         },
         page: {
-          // the open book — a cleaner sheet than the room around it
-          paper: "#f7f2e5",
-          line: "#e4dbc4",
-          text: "#221e16",
-          faint: "#8a8067",
-          cite: "#3949c4",
+          // the open book — faintly warm paper against the white room
+          paper: "#faf8f3",
+          line: "#e9e6dc",
+          text: "#1b1914",
+          faint: "#8d887a",
+          cite: "#1f33bd",
         },
       },
       fontFamily: {
@@ -45,9 +50,9 @@ const config: Config = {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "book-jump": {
-          "0%": { backgroundColor: "rgba(107,131,246,0.0)" },
-          "30%": { backgroundColor: "rgba(107,131,246,0.28)" },
-          "100%": { backgroundColor: "rgba(107,131,246,0.0)" },
+          "0%": { backgroundColor: "rgba(44,67,223,0.0)" },
+          "30%": { backgroundColor: "rgba(44,67,223,0.16)" },
+          "100%": { backgroundColor: "rgba(44,67,223,0.0)" },
         },
       },
       animation: {

@@ -13,8 +13,7 @@ body {
 
 body {
   @apply bg-stage-black text-stage-ink font-sans antialiased;
-  /* Flat cream with the faintest warmth — a gallery wall, not a gradient. */
-  background-image: radial-gradient(1400px 700px at 82% -12%, rgba(107, 131, 246, 0.05), transparent 62%);
+  /* Flat white — the gallery wall. Color arrives only as accents. */
 }
 
 /* Display serif helper — the Norton wordmark voice. */
@@ -68,11 +67,11 @@ body {
     @apply select-none text-right font-mono text-[11px] text-page-faint pt-1;
   }
 
-  /* Primary action — bold periwinkle block, dark ink on top (the campaign move). */
+  /* Primary action — solid campaign cobalt, white type. */
   .btn-work {
     @apply inline-flex items-center justify-center gap-2 rounded-md border border-transparent
-           bg-work-light px-4 py-2 text-sm font-semibold text-stage-ink transition-colors
-           hover:bg-work-deep hover:text-stage-panel
+           bg-work-light px-4 py-2 text-sm font-semibold text-white transition-colors
+           hover:bg-work-glow
            disabled:cursor-not-allowed disabled:opacity-40;
   }
 
