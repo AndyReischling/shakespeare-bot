@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Header } from "@/components/Panels";
 import { WelcomeAudio } from "@/components/WelcomeAudio";
-import { TUTORS } from "@/lib/tutors";
+import { FacultyBrowser } from "@/components/FacultyBrowser";
 
 const doors = [
   {
@@ -31,6 +31,15 @@ const doors = [
     blurb:
       "The Crown v. Hamlet: argue the killing of Polonius against the page. Commit to a position, meet resistance, rest your case — and be judged on the argument you built, and the evidence you ignored.",
   },
+  {
+    href: "/colloquy",
+    no: "04",
+    label: "Colloquy",
+    tag: "Mode 4 · The author",
+    kind: "Open conversation",
+    blurb:
+      "Sit with Shakespeare and ask him anything: life, love, death, ambition. He answers through what he staged, and hands every great question back to you sharpened.",
+  },
 ];
 
 export default function Home() {
@@ -49,46 +58,15 @@ export default function Home() {
           </p>
         </div>
 
-        {/* The faculty — the roster */}
+        {/* The faculty — tutor first, then work. Built to scale past three. */}
         <div className="mt-12">
           <p className="worklabel mb-2">The faculty</p>
           <p className="mb-5 max-w-2xl text-sm leading-relaxed text-stage-dim">
-            Every tutor runs on the same engine — a persona met at work, their text on screen, and a
-            case container that makes you commit, resist, and defend. This demo ships one; the others
-            are authored the same way and sequenced next.
+            Pick the mind, then the work. Every tutor runs on the same engine: a persona met at
+            work, their text on screen, and questioning in place of answers. One work is live in
+            this demo.
           </p>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {TUTORS.map((t) => {
-              const live = t.status === "live";
-              return (
-                <div
-                  key={t.id}
-                  className={`flex flex-col rounded-xl border p-5 ${
-                    live
-                      ? "border-work-deep bg-stage-panel"
-                      : "border-stage-edge bg-stage-panel/40 opacity-80"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="worklabel text-stage-faint">{t.room}</span>
-                    {live && (
-                      <span className="rounded-full bg-work-light/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-work-glow">
-                        On stage now
-                      </span>
-                    )}
-                  </div>
-                  <span className="display mt-2 text-2xl font-medium text-stage-ink">{t.name}</span>
-                  <span className="text-[13px] italic text-stage-faint">{t.work}</span>
-                  <span className="mt-2 flex-1 text-[13px] leading-relaxed text-stage-dim">{t.blurb}</span>
-                  {live && (
-                    <a href="#rooms" className="mt-4 text-sm font-semibold text-work-glow">
-                      Enter the demo ↓
-                    </a>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <FacultyBrowser />
         </div>
 
         {/* Today's tutor — Shakespeare */}
@@ -104,12 +82,13 @@ export default function Home() {
         <div className="mt-10">
           <p className="worklabel mb-2">Choose a room</p>
           <p className="mb-5 max-w-2xl text-sm leading-relaxed text-stage-dim">
-            Three ways into the same play. <span className="text-stage-ink">Rehearsal</span> is open
-            inquiry, <span className="text-stage-ink">Encounter</span> is interrogation, and{" "}
+            Four ways in. <span className="text-stage-ink">Rehearsal</span> is open inquiry,{" "}
+            <span className="text-stage-ink">Encounter</span> is interrogation,{" "}
             <span className="text-stage-ink">Case</span> is a sustained argument with stakes and a
-            verdict on you.
+            verdict on you, and <span className="text-stage-ink">Colloquy</span> is the author
+            himself, on any question you carry.
           </p>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {doors.map((d) => (
               <Link
                 key={d.href}

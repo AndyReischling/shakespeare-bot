@@ -1,6 +1,6 @@
 // Shared types for The Rehearsal Room.
 
-export type Mode = "rehearsal" | "encounter" | "case";
+export type Mode = "rehearsal" | "encounter" | "case" | "colloquy";
 export type Skin = "trial" | "persuasion" | "pitch";
 export type Register = "conversational" | "performance" | "refusal" | "judge";
 

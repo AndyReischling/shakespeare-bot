@@ -19,8 +19,7 @@ const sans = Archivo({
 
 export const metadata: Metadata = {
   title: "The Rehearsal Room — Shakespeare · Hamlet",
-  description:
-    "One avatar, one voice, three modes on one engine. A pedagogical prototype built around the moments a play refuses to answer.",
+  description: "A pedagogical prototype based on the Socratic method.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

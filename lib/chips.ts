@@ -60,6 +60,17 @@ export function chipsFor(s: ChipState): string[] {
     return ["What would Bradley say?", "Show me where the play raises this", "So why is the door shut?"];
   }
 
+  // Colloquy: the great questions, then more personal ones as the talk deepens.
+  if (s.mode === "colloquy") {
+    if (s.turnCount === 0) {
+      return ["What is the meaning of life?", "What is love, truly?", "How should I face death?"];
+    }
+    if (s.turnCount >= 3) {
+      return ["What did writing teach you that living didn't?", "Is ambition a virtue or a disease?", "Why do we hurt the people we love?"];
+    }
+    return ["Does grief ever end?", "Can a person truly change?", "Is revenge ever just?"];
+  }
+
   if (s.mode === "encounter") {
     const own = CHARACTER_CHIPS[s.character ?? ""] ?? [];
     // A line is on the table: press on it, in this character's presence.

@@ -15,6 +15,7 @@ import {
   buildRehearsalPrompt,
   buildEncounterPrompt,
   buildCasePrompt,
+  buildColloquyPrompt,
   PromptContext,
 } from "@/lib/prompts";
 import { loadSkin, phaseById } from "@/lib/engine/caseContainer";
@@ -24,6 +25,7 @@ import {
   FIRST_RUN,
   ENCOUNTER_OPENINGS,
   CASE_OPENING,
+  COLLOQUY_OPENING,
 } from "@/lib/understudy";
 import { verifyOutput, correctionInstruction, extractCitations } from "@/lib/textLicense";
 import { deliver } from "@/lib/prompts/delivery";
@@ -145,6 +147,8 @@ export async function POST(req: NextRequest) {
     system = buildCasePrompt(ctx);
     register = refusal ? "refusal" : "judge";
     if (ph) phaseAdvance = { advanceLabel: ph.advanceLabel, nextPossible: true };
+  } else if (mode === "colloquy") {
+    system = buildColloquyPrompt(ctx);
   } else {
     system = buildRehearsalPrompt(ctx);
   }
@@ -152,7 +156,9 @@ export async function POST(req: NextRequest) {
   // Opening-turn instruction, appended to the mode prompt.
   if (isOpening) {
     const openingInstruction =
-      mode === "encounter"
+      mode === "colloquy"
+        ? `OPENING TURN: The student has just sat down with thee, not to study the play but to talk with the man. Welcome them in two or three sentences. Tell them plainly: ask what they will, of life or love or death or anything; thou wilt answer from what thou hast staged, and thou wilt hand every great question back sharpened. End by inviting their first question. No line references in the greeting.`
+        : mode === "encounter"
         ? `OPENING TURN: The student has just entered. Greet them AS ${character ?? "the character"}, in character and in period voice, in three sentences or fewer. Let them feel thy limits: thou knowest only what thou hast witnessed in the play. End by inviting their question. Do not cite line references in this greeting.`
         : mode === "case"
           ? `OPENING TURN: Open the court in thy judge's voice. Name the case and the matter (the killing of Polonius, 3.4). Say plainly that thou triest the argument, not the Prince's soul. Direct them: choose a side and a theory above, then deliver an opening statement of one hundred and fifty words or fewer, which thou wilt rule textually arguable or not. Under 110 words.`
@@ -172,7 +178,9 @@ export async function POST(req: NextRequest) {
         ? ENCOUNTER_OPENINGS[character ?? ""] ?? FIRST_RUN
         : mode === "case"
           ? CASE_OPENING
-          : FIRST_RUN
+          : mode === "colloquy"
+            ? COLLOQUY_OPENING
+            : FIRST_RUN
       : understudyReply(toUnderstudy(ctx, mode, input, history));
 
   let text: string;

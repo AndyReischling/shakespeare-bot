@@ -180,6 +180,30 @@ function followUpTurn(ctx: UnderstudyContext): string {
   return pick(pool, seed, ctx.lastAssistantText);
 }
 
+// ── colloquy turn ───────────────────────────────────────────────────────────
+// Ask the author anything; he answers through the work. Offline form: set the
+// nearest Hamlet passage against the question, gesture at the wider canon, and
+// hand back one reflective question.
+
+function colloquyTurn(ctx: UnderstudyContext): string {
+  const p = ctx.passages[0];
+  const seed = ctx.input;
+
+  const reflect = [
+    `Now turn it upon thyself: when didst thou last feel the truth of that line in thine own life, and what didst thou do with it?`,
+    `So I ask thee back: if the answer came tomorrow, plain and certain, what wouldst thou do differently by supper?`,
+    `Tell me this first: art thou asking what is true, or asking for leave to do what thou hast already chosen?`,
+    `Answer me this in trade: what wouldst thou give up to have it? The price a man will pay for a thing is the honestest measure of what he thinks it is.`,
+  ];
+  const q = pick(reflect, seed, ctx.lastAssistantText);
+
+  if (!p) {
+    return `A great question, and I'll not cheapen it with a great answer. I stood such matters up on a stage and let them fight; that is the only philosophy I own.\n\n${q}`;
+  }
+
+  return `I'll not answer thee from the air; I'll answer from the work. Mark what I gave ${p.speaker}, ${p.ref}: "${cleanQuote(p.text)}" I wrote that man his doubt because I could not write him his certainty. The plays hold the mirror up; they do not settle the account.\n\n${q}`;
+}
+
 // ── anchor turn ─────────────────────────────────────────────────────────────
 
 function anchorTurn(ctx: UnderstudyContext): string {
@@ -299,6 +323,7 @@ function lineSpecificMove(text: string, ref: string, who: string, avoid?: string
 
 export function understudyReply(ctx: UnderstudyContext): string {
   if (ctx.refusal) return refusalTurn(ctx);
+  if (ctx.mode === "colloquy") return colloquyTurn(ctx);
   // Inside an open thread, only an explicit request re-anchors. Everything else
   // is the student talking back, and deserves a reply to what they said.
   if (ctx.mode !== "case" && ctx.lastAssistantText && !isRequest(ctx.input)) {
@@ -319,6 +344,12 @@ export const ENCOUNTER_OPENINGS: Record<string, string> = {
   Claudius:
     "Denmark's business sits heavy today. Ask what thou wilt. I was not everywhere, and I'll not feign that I was.",
 };
+
+export const COLLOQUY_OPENING = `Sit, then. No lesson today; only talk.
+
+Ask me what thou wilt. Of love, of death, of money, of what a life is for. I'll not preach at thee; I never could. What I know, I know from the standing of it up on a stage, and I'll answer from that. And fair warning: every great question thou bringst me, I shall hand back to thee sharper than it came.
+
+What weighs on thee?`;
 
 export const CASE_OPENING = `The court is sitting. This is The Crown against Hamlet: the killing of Polonius in the Queen's closet, 3.4.
 

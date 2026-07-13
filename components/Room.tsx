@@ -264,7 +264,9 @@ export default function Room({
               placeholder={
                 mode === "case" && currentPhase?.kind === "POSITION"
                   ? "Your opening statement (≤150 words)…"
-                  : "Speak to the page…"
+                  : mode === "colloquy"
+                    ? "Ask him anything…"
+                    : "Speak to the page…"
               }
               value={input}
               rows={1}

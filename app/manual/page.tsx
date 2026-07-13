@@ -37,7 +37,7 @@ export default function ManualPage() {
           </p>
         </Section>
 
-        <Section title="The three rooms">
+        <Section title="The four rooms">
           <p>
             <strong className="text-stage-ink">Rehearsal</strong> is open inquiry. Bring a scene, a
             speech, a line, or a question. Shakespeare anchors you to the page and presses with one
@@ -61,6 +61,14 @@ export default function ManualPage() {
             the ruling explaining why. The closing judges the argument you built, including the
             strongest evidence you never used. No verdict is passed on the Prince. One is passed on
             you.
+          </p>
+          <p>
+            <strong className="text-stage-ink">Colloquy</strong> is open conversation with the
+            author himself. Ask him anything at all: the meaning of life, whether love lasts, how
+            to face death, what ambition costs. He answers in character and always through his
+            work, citing Hamlet to the line and pointing at the rest of the canon by name, and he
+            will not hand down verdicts on the great questions. Expect the mirror held up, and one
+            pointed question back, aimed at you.
           </p>
         </Section>
 
