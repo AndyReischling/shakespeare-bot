@@ -28,33 +28,20 @@ function TutorSwitcher() {
             <p className="worklabel px-2 py-1.5 text-stage-faint">The faculty · one engine</p>
             {TUTORS.map((t) => {
               const live = t.status === "live";
-              const inner = (
-                <div
-                  className={`flex items-start justify-between gap-3 rounded-md px-2 py-2 ${
-                    live ? "hover:bg-work-light/10" : "opacity-70"
-                  }`}
-                >
-                  <div>
-                    <div className="display text-[15px] text-stage-ink">
-                      {t.name} <span className="text-stage-faint">· {t.work}</span>
+              return (
+                <Link key={t.id} href={`/tutor/${t.id}`} onClick={() => setOpen(false)}>
+                  <div className="flex items-start justify-between gap-3 rounded-md px-2 py-2 hover:bg-work-light/10">
+                    <div>
+                      <div className="display text-[15px] text-stage-ink">{t.name}</div>
+                      <div className="text-[12px] text-stage-dim">{t.blurb}</div>
                     </div>
-                    <div className="text-[12px] text-stage-dim">{t.blurb}</div>
+                    {live && (
+                      <span className="mt-0.5 shrink-0 rounded-full bg-work-light/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-work-glow">
+                        Live
+                      </span>
+                    )}
                   </div>
-                  {live && (
-                    <span className="mt-0.5 shrink-0 rounded-full bg-work-light/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-work-glow">
-                      Live
-                    </span>
-                  )}
-                </div>
-              );
-              return live ? (
-                <Link key={t.id} href={t.href || "/"} onClick={() => setOpen(false)}>
-                  {inner}
                 </Link>
-              ) : (
-                <div key={t.id} aria-disabled>
-                  {inner}
-                </div>
               );
             })}
           </div>
