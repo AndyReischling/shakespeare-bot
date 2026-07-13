@@ -105,7 +105,10 @@ export default function Room({
 
   return (
     <div className="flex h-screen flex-col">
-      <Header subtitle={headerSubtitle} />
+      <Header
+        subtitle={headerSubtitle}
+        workLabel={mode === "colloquy" ? "All works" : undefined}
+      />
 
       {frameBanner && (
         <div className="flex items-center justify-between border-b border-work-deep/30 bg-work-light/12 px-4 py-1.5 text-[12px] text-work-glow">

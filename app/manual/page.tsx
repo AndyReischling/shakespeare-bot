@@ -30,7 +30,7 @@ export default function ManualPage() {
             Use the <strong className="text-stage-ink">Tutor</strong> and{" "}
             <strong className="text-stage-ink">Work</strong> menus in the top bar. Each tutor
             teaches their own texts by the same process: the work on screen, every claim cited to a
-            line, and questioning in place of answers. In this demo one work is live —{" "}
+            line, and questioning in place of answers. In this demo one work is live:{" "}
             <strong className="text-stage-ink">Shakespeare teaching Hamlet</strong>. The rest of the
             catalog shows how the same engine extends: pick Plato and The Republic, or Aristotle and
             the Poetics, and you would get this same room with a different mind in it.

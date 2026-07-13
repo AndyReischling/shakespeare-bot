@@ -66,8 +66,9 @@ function TutorSwitcher() {
 
 // Works switcher — the catalog. One work is live in this demo (Hamlet); the rest
 // show what it looks like to run the same process on a different text: pick the
-// tutor, pick the work, same engine underneath.
-function WorkSwitcher() {
+// tutor, pick the work, same engine underneath. In Colloquy the current "work"
+// is the whole canon, since the author cites from everything he wrote.
+function WorkSwitcher({ current = "Hamlet" }: { current?: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
@@ -78,7 +79,7 @@ function WorkSwitcher() {
         aria-expanded={open}
       >
         <span className="worklabel text-work-glow">Work</span>
-        <span className="font-medium">Hamlet</span>
+        <span className="font-medium">{current}</span>
         <span className="text-stage-faint">▾</span>
       </button>
       {open && (
@@ -122,7 +123,7 @@ function WorkSwitcher() {
   );
 }
 
-export function Header({ subtitle }: { subtitle?: string }) {
+export function Header({ subtitle, workLabel }: { subtitle?: string; workLabel?: string }) {
   return (
     <header className="relative z-50 flex items-center justify-between border-b border-stage-edge bg-stage-deep/70 px-4 py-2.5 backdrop-blur">
       <div className="flex items-baseline gap-3">
@@ -136,7 +137,7 @@ export function Header({ subtitle }: { subtitle?: string }) {
           Manual
         </Link>
         <TutorSwitcher />
-        <WorkSwitcher />
+        <WorkSwitcher current={workLabel} />
       </nav>
     </header>
   );
