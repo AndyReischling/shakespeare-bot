@@ -104,6 +104,7 @@ export function FacultyBrowser() {
                 key={t.id}
                 role="tab"
                 aria-selected={active}
+                onMouseDown={(e) => e.preventDefault()}
                 onClick={() => {
                   setTutorId(t.id);
                   setWorkId(null);
@@ -144,6 +145,10 @@ export function FacultyBrowser() {
                 return w.live ? (
                   <button
                     key={w.id}
+                    // Don't let a mouse click leave the card focused (the focus
+                    // ring made it look permanently "on"). Keyboard focus keeps
+                    // its ring for accessibility.
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => {
                       const next = isSelected ? null : w.id;
                       setWorkId(next);
@@ -156,21 +161,23 @@ export function FacultyBrowser() {
                     }}
                     className={`rounded-lg border p-3 text-left transition-colors ${
                       isSelected
-                        ? "border-work-deep bg-work-light/25"
-                        : "border-stage-edge bg-stage-panel hover:border-work-deep hover:bg-work-light/10"
+                        ? "border-work-deep bg-work-light text-stage-ink shadow-sm"
+                        : "border-stage-edge bg-stage-panel hover:border-work-deep"
                     }`}
                   >
                     <div className="display text-[15px] font-medium leading-tight text-stage-ink">
                       {w.title}
                     </div>
                     <div className="mt-1 flex items-center justify-between">
-                      <span className="text-[11px] text-stage-faint">{w.kind}</span>
+                      <span className={`text-[11px] ${isSelected ? "text-stage-ink/70" : "text-stage-faint"}`}>
+                        {w.kind}
+                      </span>
                       <span
                         className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] ${
-                          isSelected ? "bg-work-deep text-stage-panel" : "bg-work-light/25 text-work-glow"
+                          isSelected ? "bg-stage-ink text-work-glow" : "bg-work-light/25 text-work-glow"
                         }`}
                       >
-                        {isSelected ? "Chosen" : "Live"}
+                        {isSelected ? "Chosen ✓" : "Live"}
                       </span>
                     </div>
                   </button>

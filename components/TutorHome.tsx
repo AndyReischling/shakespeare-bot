@@ -116,18 +116,23 @@ export function TutorHome({ tutorId }: { tutorId: string }) {
             return w.live ? (
               <button
                 key={w.id}
+                onMouseDown={(e) => e.preventDefault()}
                 onClick={() => setSelected(isSelected ? null : w)}
                 className={`rounded-lg border p-3 text-left transition-colors ${
                   isSelected
-                    ? "border-work-deep bg-work-light/25"
-                    : "border-work-deep bg-work-light/10 hover:bg-work-light/20"
+                    ? "border-work-deep bg-work-light text-stage-ink shadow-sm"
+                    : "border-stage-edge bg-stage-panel hover:border-work-deep"
                 }`}
               >
                 <div className="display text-[15px] font-medium leading-tight text-stage-ink">{w.title}</div>
                 <div className="mt-1 flex items-center justify-between">
-                  <span className="text-[11px] text-stage-faint">{w.kind}</span>
-                  <span className="rounded-full bg-work-light/25 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] text-work-glow">
-                    {isSelected ? "Chosen" : "Live"}
+                  <span className={`text-[11px] ${isSelected ? "text-stage-ink/70" : "text-stage-faint"}`}>{w.kind}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] ${
+                      isSelected ? "bg-stage-ink text-work-glow" : "bg-work-light/25 text-work-glow"
+                    }`}
+                  >
+                    {isSelected ? "Chosen ✓" : "Live"}
                   </span>
                 </div>
               </button>
