@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { TUTORS } from "@/lib/tutors";
+import { TUTORS, Tutor } from "@/lib/tutors";
 
 // Tutor switcher — this demo runs one tutor, but the platform hosts many. The
 // menu makes it clear you could move to another Socratic bot (Phase 2).
@@ -51,11 +51,10 @@ function TutorSwitcher({ currentName }: { currentName?: string }) {
   );
 }
 
-// Works switcher — the catalog. One work is live in this demo (Hamlet); the rest
-// show what it looks like to run the same process on a different text: pick the
-// tutor, pick the work, same engine underneath. In Colloquy the current "work"
-// is the whole canon, since the author cites from everything he wrote.
-function WorkSwitcher({ current = "Hamlet" }: { current?: string }) {
+// Works switcher — scoped to the CURRENT tutor. "All" is the tutor's own page
+// (no work on the table, Colloquy open); each live work links to its dedicated
+// page; the rest of the catalog shows dimmed.
+function WorkSwitcher({ tutor, current }: { tutor: Tutor; current?: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
@@ -66,43 +65,48 @@ function WorkSwitcher({ current = "Hamlet" }: { current?: string }) {
         aria-expanded={open}
       >
         <span className="worklabel text-work-glow">Work</span>
-        <span className="font-medium">{current}</span>
+        <span className="font-medium">{current ?? "All"}</span>
         <span className="text-stage-faint">▾</span>
       </button>
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-50 mt-2 max-h-[70vh] w-80 animate-worklight-in overflow-y-auto rounded-lg border border-stage-edge bg-stage-panel p-2 shadow-2xl">
-            <p className="worklabel px-2 py-1.5 text-stage-faint">The catalog · same process, any work</p>
-            {TUTORS.map((t) => (
-              <div key={t.id} className="mb-1">
-                <p className="display px-2 pt-2 text-[13px] italic text-stage-faint">{t.name}</p>
-                {t.works.map((w) =>
-                  w.live ? (
-                    <Link
-                      key={w.id}
-                      href="/"
-                      onClick={() => setOpen(false)}
-                      className="flex items-center justify-between rounded-md px-2 py-1.5 hover:bg-work-light/10"
-                    >
-                      <span className="text-[14px] font-medium text-stage-ink">{w.title}</span>
-                      <span className="rounded-full bg-work-light/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-work-glow">
-                        Live
-                      </span>
-                    </Link>
-                  ) : (
-                    <div
-                      key={w.id}
-                      className="flex items-center justify-between rounded-md px-2 py-1.5 opacity-60"
-                      title="This demo teaches Hamlet only"
-                    >
-                      <span className="text-[14px] text-stage-dim">{w.title}</span>
-                      <span className="text-[11px] text-stage-faint">{w.kind}</span>
-                    </div>
-                  ),
-                )}
-              </div>
-            ))}
+          <div className="absolute right-0 z-50 mt-2 max-h-[70vh] w-72 animate-worklight-in overflow-y-auto rounded-lg border border-stage-edge bg-stage-panel p-2 shadow-2xl">
+            <p className="display px-2 py-1.5 text-[13px] italic text-stage-faint">
+              {tutor.name}&apos;s works
+            </p>
+            <Link
+              href={`/tutor/${tutor.id}`}
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between rounded-md px-2 py-1.5 hover:bg-work-light/10"
+            >
+              <span className="text-[14px] font-medium text-stage-ink">All</span>
+              <span className="text-[11px] text-stage-faint">the tutor&apos;s page</span>
+            </Link>
+            {tutor.works.map((w) =>
+              w.live ? (
+                <Link
+                  key={w.id}
+                  href={`/tutor/${tutor.id}/${w.id}`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between rounded-md px-2 py-1.5 hover:bg-work-light/10"
+                >
+                  <span className="text-[14px] font-medium text-stage-ink">{w.title}</span>
+                  <span className="rounded-full bg-accent-yellow px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-stage-ink">
+                    Live
+                  </span>
+                </Link>
+              ) : (
+                <div
+                  key={w.id}
+                  className="flex items-center justify-between rounded-md px-2 py-1.5 opacity-60"
+                  title="Not in this demo"
+                >
+                  <span className="text-[14px] text-stage-dim">{w.title}</span>
+                  <span className="text-[11px] text-stage-faint">{w.kind}</span>
+                </div>
+              ),
+            )}
           </div>
         </>
       )}
@@ -113,12 +117,13 @@ function WorkSwitcher({ current = "Hamlet" }: { current?: string }) {
 export function Header({
   subtitle,
   workLabel,
-  tutorLabel,
+  tutorId,
 }: {
   subtitle?: string;
   workLabel?: string;
-  tutorLabel?: string;
+  tutorId?: string;
 }) {
+  const tutor = TUTORS.find((t) => t.id === tutorId) ?? TUTORS.find((t) => t.status === "live")!;
   return (
     <header className="relative z-50 flex items-center justify-between border-b border-stage-edge bg-stage-deep/70 px-4 py-2.5 backdrop-blur">
       <div className="flex items-baseline gap-3">
@@ -131,8 +136,8 @@ export function Header({
         <Link href="/manual" className="btn-ghost">
           Manual
         </Link>
-        <TutorSwitcher currentName={tutorLabel} />
-        <WorkSwitcher current={workLabel} />
+        <TutorSwitcher currentName={tutor.name} />
+        <WorkSwitcher tutor={tutor} current={workLabel} />
       </nav>
     </header>
   );

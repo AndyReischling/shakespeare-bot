@@ -107,7 +107,7 @@ export default function Room({
     <div className="flex h-screen flex-col">
       <Header
         subtitle={headerSubtitle}
-        workLabel={mode === "colloquy" ? "All works" : undefined}
+        workLabel={mode === "colloquy" ? "All" : "Hamlet"}
       />
 
       {frameBanner && (

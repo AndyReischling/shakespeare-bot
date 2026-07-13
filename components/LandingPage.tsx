@@ -13,7 +13,7 @@ export function LandingPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header tutorLabel={tutor.name} workLabel={work?.title ?? "—"} />
+      <Header tutorId={tutor.id} workLabel={work?.title ?? "All"} />
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-5 py-12 sm:px-8">
         {/* Hero — platform level */}
         <div className="animate-worklight-in">

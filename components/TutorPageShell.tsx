@@ -13,7 +13,7 @@ export function TutorPageShell({ tutorId }: { tutorId: string }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header subtitle={tutor.room} tutorLabel={tutor.name} workLabel={work?.title ?? "—"} />
+      <Header subtitle={tutor.room} tutorId={tutor.id} workLabel={work?.title ?? "All"} />
       <TutorHome tutorId={tutor.id} onWorkChange={setWork} />
     </div>
   );
