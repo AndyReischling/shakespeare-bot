@@ -64,18 +64,37 @@ export default function ManualPage() {
           </p>
           <p>
             <strong className="text-stage-ink">Colloquy</strong> is open conversation with the
-            author himself, and the one room without the book open beside you. Ask him anything at
-            all: the meaning of life, whether love lasts, how to face death, what ambition costs.
-            He answers in character and always through his work, quoting and citing from the whole
-            canon, any play, any sonnet, and he will not hand down verdicts on the great questions.
-            Expect the mirror held up, and one pointed question back, aimed at you.
+            author himself, on any question you carry. It has its own section below.
+          </p>
+        </Section>
+
+        <Section title="Colloquy: ask the author anything">
+          <p>
+            The other three rooms study the selected work. Colloquy is different in kind: you sit
+            with the man, and the subject is whatever you bring. The meaning of life. Whether love
+            lasts. How to face death. What ambition costs. Whether a person can change. Nothing is
+            off the table, including things no one in 1600 could know, which he will meet honestly,
+            as a man of his time, by mapping them to the human constants his work does know.
+          </p>
+          <p>
+            Three things make it a Socratic conversation rather than an oracle. First, he answers
+            only through what he staged: every turn draws on his work, quoted and cited from the
+            whole canon, any play, any sonnet, not just the work selected in this demo. Second, he
+            will not hand down verdicts on the great questions; his plays argue both sides, and he
+            will show you where they disagree with each other. Third, every answer ends with one
+            pointed question aimed back at you and your own case. You leave with less certainty and
+            better questions. That is the point.
+          </p>
+          <p>
+            It is also the one room without the book open beside you, because the conversation is
+            not anchored to a single text. References appear inline as he cites them.
           </p>
         </Section>
 
         <Section title="The book is the other half of the screen">
           <p>
-            The full text of the play sits beside the dialogue at all times, so both of you are
-            looking at the same page. It works in both directions:
+            In Rehearsal, Encounters, and the Case, the full text of the play sits beside the
+            dialogue, so both of you are looking at the same page. It works in both directions:
           </p>
           <p>
             When the tutor cites a line, the reference appears as a small chip like{" "}
@@ -115,9 +134,12 @@ export default function ManualPage() {
           </p>
         </Section>
 
-        <div className="mt-12 flex gap-3">
+        <div className="mt-12 flex flex-wrap gap-3">
           <Link href="/rehearsal" className="btn-work">
             Enter the Rehearsal Room
+          </Link>
+          <Link href="/colloquy" className="btn-ghost">
+            Sit for a Colloquy
           </Link>
           <Link href="/" className="btn-ghost">
             Back to the front door
