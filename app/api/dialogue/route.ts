@@ -19,14 +19,6 @@ import {
   PromptContext,
 } from "@/lib/prompts";
 import { loadSkin, phaseById } from "@/lib/engine/caseContainer";
-import {
-  understudyReply,
-  UnderstudyContext,
-  FIRST_RUN,
-  ENCOUNTER_OPENINGS,
-  CASE_OPENING,
-  COLLOQUY_OPENING,
-} from "@/lib/understudy";
 import { verifyOutput, correctionInstruction, extractCitations } from "@/lib/textLicense";
 import { deliver } from "@/lib/prompts/delivery";
 import { checkAccess, checkRate, checkDailyCap, noteApiCall, clientIp } from "@/lib/ops";
@@ -166,42 +158,35 @@ export async function POST(req: NextRequest) {
     system += "\n\n" + openingInstruction;
   }
 
-  // 4. Generate — real model if configured, else the deterministic understudy.
+  // 4. Generate. Every turn is the live model — there are no scripted responses.
+  //    If the model cannot answer, the client gets an honest error state and the
+  //    user retries; a template pretending to teach is worse than a visible miss.
+  if (!hasAnthropic()) {
+    return new Response(
+      "The live engine is not configured (ANTHROPIC_API_KEY is missing). There are no scripted responses; set the key and reload.",
+      { status: 503 },
+    );
+  }
+  const cap = checkDailyCap();
+  if (!cap.ok) return new Response(cap.reason, { status: cap.status });
+
   const messages: ChatTurn[] = isOpening
     ? [{ role: "user", content: "(The student enters.)" }]
     : [...history, { role: "user", content: input }];
-  const usedModel = hasAnthropic() && checkDailyCap().ok;
-
-  const offlineReply = () =>
-    isOpening
-      ? mode === "encounter"
-        ? ENCOUNTER_OPENINGS[character ?? ""] ?? FIRST_RUN
-        : mode === "case"
-          ? CASE_OPENING
-          : mode === "colloquy"
-            ? COLLOQUY_OPENING
-            : FIRST_RUN
-      : understudyReply(toUnderstudy(ctx, mode, input, history));
 
   let text: string;
-  if (usedModel) {
+  try {
+    text = stripEmDashes(await anthropicText(system, messages));
+  } catch (firstErr) {
+    // Transient failures (rate limit, overloaded) get one retry, then an error.
+    console.error("[dialogue] model call failed, retrying:", (firstErr as Error)?.message ?? firstErr);
     try {
+      await new Promise((r) => setTimeout(r, 1200));
       text = stripEmDashes(await anthropicText(system, messages));
-    } catch (firstErr) {
-      // Transient failures (rate limit, overloaded) deserve one retry before we
-      // fall back to the scripted understudy. Log either way: a silent fallback
-      // reads to the user as the bot "repeating itself".
-      console.error("[dialogue] model call failed, retrying:", (firstErr as Error)?.message ?? firstErr);
-      try {
-        await new Promise((r) => setTimeout(r, 1200));
-        text = stripEmDashes(await anthropicText(system, messages));
-      } catch (secondErr) {
-        console.error("[dialogue] retry failed, using understudy:", (secondErr as Error)?.message ?? secondErr);
-        text = offlineReply();
-      }
+    } catch (secondErr) {
+      console.error("[dialogue] retry failed:", (secondErr as Error)?.message ?? secondErr);
+      return new Response("The room went quiet a moment. Ask again.", { status: 503 });
     }
-  } else {
-    text = offlineReply();
   }
 
   // 5. Citation verification (Encounter/Case). One regeneration pass on a miss;
@@ -210,7 +195,7 @@ export async function POST(req: NextRequest) {
   if (mode === "encounter" || mode === "case") {
     const report = verifyOutput(text);
     licenseOk = report.ok;
-    if (!report.ok && usedModel) {
+    if (!report.ok) {
       try {
         const corrected = await anthropicText(
           system + "\n\nCORRECTION REQUIRED: " + correctionInstruction(report),
@@ -237,7 +222,7 @@ export async function POST(req: NextRequest) {
     refusalId: refusal?.id ?? null,
     refusalMethod: match.method,
     licenseOk,
-    usedModel,
+    usedModel: true,
     inputLen: input.length,
     outputLen: text.length,
   });
@@ -257,7 +242,7 @@ export async function POST(req: NextRequest) {
             register,
             delivery: { direction: delivery.direction, pauseBeforeMs: delivery.pauseBeforeMs },
             phaseAdvance,
-            usedModel,
+            usedModel: true,
             licenseOk,
           }),
         ),
@@ -266,8 +251,6 @@ export async function POST(req: NextRequest) {
       const parts = text.split(/(\s+)/);
       for (const part of parts) {
         controller.enqueue(encoder.encode(sse("delta", { text: part })));
-        // small yield so the client renders progressively
-        await new Promise((r) => setTimeout(r, usedModel ? 0 : 12));
       }
       controller.enqueue(encoder.encode(sse("done", { ok: true })));
       controller.close();
@@ -283,24 +266,3 @@ export async function POST(req: NextRequest) {
   });
 }
 
-function toUnderstudy(
-  ctx: PromptContext,
-  mode: DialogueRequest["mode"],
-  input: string,
-  history: ChatTurn[],
-): UnderstudyContext {
-  const lastAssistant = [...history].reverse().find((m) => m.role === "assistant");
-  return {
-    mode,
-    input,
-    passages: ctx.passages,
-    criticism: ctx.criticism,
-    pointers: ctx.pointers,
-    refusal: ctx.refusal,
-    pushCount: ctx.pushCount,
-    character: ctx.character,
-    phaseLabel: ctx.phaseLabel,
-    skinTitle: ctx.skinLabel,
-    lastAssistantText: lastAssistant?.content,
-  };
-}

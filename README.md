@@ -9,9 +9,9 @@ literature prototype built around *Hamlet* — and around the moments a play mus
 > are looking at.
 
 This runs unattended: evaluators use it alone, with nobody narrating. So it
-self-explains, and it never dead-ends — every screen has an obvious next move, and
-**the whole product works with zero API keys** (a deterministic in-character
-"understudy" composes turns from the authored data when no model is configured).
+self-explains, and it never dead-ends — every screen has an obvious next move.
+**Every turn is generated live; there are no scripted responses.** If the model
+cannot answer, the user sees an honest error state and retries.
 
 ---
 
@@ -19,16 +19,13 @@ self-explains, and it never dead-ends — every screen has an obvious next move,
 
 ```bash
 npm install
-cp .env.example .env.local     # optional — all keys degrade gracefully
+cp .env.example .env.local     # then set ANTHROPIC_API_KEY (required)
 npm run dev                    # http://localhost:3000
 ```
 
-No keys? It still runs: retrieval falls back to a local lexical scorer, dialogue
-falls back to the deterministic understudy, and audio falls back to transcripts.
-
-Add an `ANTHROPIC_API_KEY` (model `claude-sonnet-4-6`) to run the live engine, and
-`EMBEDDING_PROVIDER=openai|voyage` (+ key) to swap the file-based vector store in
-for lexical retrieval.
+`ANTHROPIC_API_KEY` (model `claude-sonnet-4-6`) is required — the dialogue engine
+is the product. Optionally set `EMBEDDING_PROVIDER=openai|voyage` (+ key) to swap
+the file-based vector store in for the local lexical retrieval scorer.
 
 ```bash
 npm run build:refusal   # validate the refusal map schema (15–25 patterns, named critics…)

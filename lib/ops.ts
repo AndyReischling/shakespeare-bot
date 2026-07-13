@@ -43,8 +43,7 @@ export function checkRate(ip: string): GuardResult {
   return { ok: true };
 }
 
-// Only the real-model path consumes the daily API cap; the offline understudy
-// makes no external calls and is never capped.
+// Global daily cap on model-serving turns.
 export function checkDailyCap(): GuardResult {
   const now = Date.now();
   if (now - dailyWindowStart > DAY) {
