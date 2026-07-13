@@ -187,8 +187,18 @@ export async function POST(req: NextRequest) {
   if (usedModel) {
     try {
       text = stripEmDashes(await anthropicText(system, messages));
-    } catch {
-      text = offlineReply();
+    } catch (firstErr) {
+      // Transient failures (rate limit, overloaded) deserve one retry before we
+      // fall back to the scripted understudy. Log either way: a silent fallback
+      // reads to the user as the bot "repeating itself".
+      console.error("[dialogue] model call failed, retrying:", (firstErr as Error)?.message ?? firstErr);
+      try {
+        await new Promise((r) => setTimeout(r, 1200));
+        text = stripEmDashes(await anthropicText(system, messages));
+      } catch (secondErr) {
+        console.error("[dialogue] retry failed, using understudy:", (secondErr as Error)?.message ?? secondErr);
+        text = offlineReply();
+      }
     }
   } else {
     text = offlineReply();

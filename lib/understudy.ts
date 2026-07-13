@@ -201,7 +201,15 @@ function colloquyTurn(ctx: UnderstudyContext): string {
     return `A great question, and I'll not cheapen it with a great answer. I stood such matters up on a stage and let them fight; that is the only philosophy I own.\n\n${q}`;
   }
 
-  return `I'll not answer thee from the air; I'll answer from the work. Mark what I gave ${p.speaker}, ${p.ref}: "${cleanQuote(p.text)}" I wrote that man his doubt because I could not write him his certainty. The plays hold the mirror up; they do not settle the account.\n\n${q}`;
+  const leads = [
+    `I'll not answer thee from the air; I'll answer from the work. Mark what I gave ${p.speaker}, ${p.ref}: "${cleanQuote(p.text)}" I wrote that man his doubt because I could not write him his certainty.`,
+    `Hear how I once put it in another's mouth. ${p.speaker}, ${p.ref}: "${cleanQuote(p.text)}" I could give him the words; I could not give him the answer. That labour I leave to the living.`,
+    `The nearest I ever came to it, I gave away. ${p.speaker} says it, ${p.ref}: "${cleanQuote(p.text)}" Note that I let the line stand unanswered on my stage. I do not answer it better at my own table.`,
+    `Thy question is old company to me. I set it once in ${p.speaker}'s mouth, ${p.ref}: "${cleanQuote(p.text)}" and I let the play worry it like a dog with a bone. It never let go, and neither have I.`,
+  ];
+  const lead = pick(leads, seed + (p.ref ?? ""), ctx.lastAssistantText);
+
+  return `${lead} The plays hold the mirror up; they do not settle the account.\n\n${q}`;
 }
 
 // ── anchor turn ─────────────────────────────────────────────────────────────
