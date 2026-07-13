@@ -32,3 +32,4 @@ yarn-error.log*
 # generated audio not committed (see /scripts/design-voice.md)
 # public/audio kept in-repo for the demo, but large renders can be ignored:
 # /public/audio/*.mp3
+.vercel

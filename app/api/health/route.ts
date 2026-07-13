@@ -14,7 +14,8 @@ export async function GET() {
     // Whitespace, newlines, or quotes pasted around the key are the usual culprits.
     keyHasWhitespaceOrQuotes: raw !== raw.trim() || /["'\s]/.test(raw),
     keyPrefixOk: raw.trim().startsWith("sk-ant-"),
-    model,
+    // Never echo values that might hold a mispasted secret.
+    model: /sk-|key|secret/i.test(model) ? "(looks like a secret; not echoing)" : model,
   };
 
   if (!raw) {
