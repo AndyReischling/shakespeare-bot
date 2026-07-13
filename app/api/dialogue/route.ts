@@ -46,6 +46,7 @@ function cleanModelText(text: string): string {
       return part
         .replace(/\*/g, "")
         .replace(/\s*[—–]\s*/g, ", ")
+        .replace(/\s+--\s+/g, ", ")
         .replace(/,\s*,/g, ",")
         .replace(/([.!?:;])\s*,\s*/g, "$1 ");
     })
@@ -117,9 +118,13 @@ export async function POST(req: NextRequest) {
   //      quotation, i.e. a deliberate confrontation) is whole-play retrieval
   //      allowed, and every passage is tagged WITNESSED / UNWITNESSED so memory
   //      cannot blur into presented evidence.
+  // A play character (not the Scholar, who is the critical tradition embodied
+  // and reads everything).
+  const isPlayCharacter = mode === "encounter" && !!character && character !== "Scholar";
+
   let passages: RetrievedPassage[] = [];
   if (!isOpening) {
-    if (mode === "encounter" && character) {
+    if (isPlayCharacter && character) {
       const witnessedSet = scenesWitnessedBy(character);
       const confronting =
         /\b\d\.\d\.\d{1,3}\b/.test(input) || /["“][^"”]{4,}["”]/.test(input);
@@ -153,8 +158,10 @@ export async function POST(req: NextRequest) {
       passages = retrievePassages(input, { topK: 5 });
     }
   }
-  const criticism = isOpening ? [] : retrieveCriticism(input, 3);
-  const pointers = isOpening ? [] : retrievePointers(refusal ? refusal.id : input, 2);
+  // Play characters know nothing of scholarship: criticism never enters their
+  // context, structurally. The Scholar and every other mode receive it.
+  const criticism = isOpening || isPlayCharacter ? [] : retrieveCriticism(input, 3);
+  const pointers = isOpening || isPlayCharacter ? [] : retrievePointers(refusal ? refusal.id : input, 2);
 
   // 3. Assemble the mode prompt.
   const ctx: PromptContext = { passages, criticism, pointers, refusal, pushCount };
@@ -164,7 +171,7 @@ export async function POST(req: NextRequest) {
 
   if (mode === "encounter") {
     ctx.character = character;
-    if (character) {
+    if (isPlayCharacter && character) {
       const witnessed = Array.from(scenesWitnessedBy(character)).sort((a, b) => {
         const [aa, as] = a.split(".").map(Number);
         const [ba, bs] = b.split(".").map(Number);
@@ -202,6 +209,8 @@ export async function POST(req: NextRequest) {
     const openingInstruction =
       mode === "colloquy"
         ? `OPENING TURN: The student has just sat down with thee, not to study the play but to talk with the man. Welcome them in two or three sentences. Tell them plainly: ask what they will, of life or love or death or anything; thou wilt answer from what thou hast staged, and thou wilt hand every great question back sharpened. End by inviting their first question. No line references in the greeting.`
+        : mode === "encounter" && character === "Scholar"
+        ? `OPENING TURN: The student has just sat down. Introduce thyself as THE SCHOLAR: not a person of the play but the critical tradition on Hamlet made flesh, four centuries of quarrelling editors and critics in one chair. Name two or three of thy quarrelling selves (Johnson, Coleridge, Bradley) and confess plainly that on the great questions the tradition has never agreed, which is why thou art worth talking to. Invite the student to ask what the scholars have argued about anything in the play. Clear modern scholarly English. Four or five sentences, no line references.`
         : mode === "encounter"
         ? `OPENING TURN: The student has just entered, and ${character ?? "the character"} must INTRODUCE THEMSELVES, fully in character and in their own voice: who they are by name and station, where they stand in the story as they understand it now, and their present state of mind. Let the introduction carry the character's temperament (their wit, their guard, their heat, their grief). Then invite the student to ask what they will, or to point at any line of the play. Five or six sentences. Do not cite line references in this greeting.`
         : mode === "case"

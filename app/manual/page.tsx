@@ -46,8 +46,12 @@ export default function ManualPage() {
           <p>
             <strong className="text-stage-ink">Encounters</strong> are interrogation. Each
             character introduces themselves first, in their own voice, and then you question them
-            directly: Hamlet, Gertrude, Claudius, Ophelia, the Ghost, Horatio, Laertes. You may put
-            any line of the play to them, from any scene. Lines from scenes they stood in, they
+            directly: Hamlet, Gertrude, Claudius, Ophelia, the Ghost, Horatio, Laertes. The
+            characters know nothing of critics or centuries after their own; if you want the
+            scholarship, question <strong className="text-stage-ink">the Scholar</strong>, the
+            critical tradition itself embodied in the same roster, who attributes every position by
+            name and always gives the dissent. You may put any line of the play to a character,
+            from any scene. Lines from scenes they stood in, they
             answer from inside the memory. Lines from scenes they never saw, they react to as the
             character would on first hearing: recognition, denial, wonder, anger. They never claim
             to have witnessed what they did not, and the reaction is the performance. Ask a

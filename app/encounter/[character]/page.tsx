@@ -37,6 +37,11 @@ const CHARACTERS: Record<string, { article: string; note: string; pronoun: strin
     note: "One way to play him: the other revenging son, who does not delay. Question the performance.",
     pronoun: "His",
   },
+  Scholar: {
+    article: "The Scholar",
+    note: "Not a person of the play: four centuries of the critical tradition, embodied. Ask what the scholars have argued.",
+    pronoun: "Their",
+  },
 };
 
 export default function EncounterPage({ params }: { params: { character: string } }) {
@@ -50,7 +55,11 @@ export default function EncounterPage({ params }: { params: { character: string 
       character={key}
       headerSubtitle={`Encounter · ${key}`}
       titleCard={{ title: meta.article, note: meta.note }}
-      frameBanner={`You are speaking to ${key === "Ghost" ? "the Ghost" : key}. ${meta.pronoun} lines, staged.`}
+      frameBanner={
+        key === "Scholar"
+          ? "You are speaking to the critical tradition. Four centuries, one chair."
+          : `You are speaking to ${key === "Ghost" ? "the Ghost" : key}. ${meta.pronoun} lines, staged.`
+      }
     />
   );
 }

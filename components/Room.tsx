@@ -130,7 +130,7 @@ export default function Room({
                 <div className="worklabel text-work-glow">A staging</div>
                 {mode === "encounter" && (
                   <nav className="flex flex-wrap justify-end gap-1.5" aria-label="Choose a character">
-                    {["Hamlet", "Gertrude", "Claudius", "Ophelia", "Ghost", "Horatio", "Laertes"].map((c) => (
+                    {["Hamlet", "Gertrude", "Claudius", "Ophelia", "Ghost", "Horatio", "Laertes", "Scholar"].map((c) => (
                       <Link
                         key={c}
                         href={`/encounter/${c}`}

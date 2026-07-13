@@ -52,6 +52,11 @@ const CHARACTER_CHIPS: Record<string, string[]> = {
     "Was your revenge more just than his?",
     "What would you have done in the Prince's place?",
   ],
+  Scholar: [
+    "What have the critics argued about the delay?",
+    "Who thinks Gertrude knew, and who disagrees?",
+    "Where does the tradition split on the Ghost?",
+  ],
 };
 
 export function chipsFor(s: ChipState): string[] {
