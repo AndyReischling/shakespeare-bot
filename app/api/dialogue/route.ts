@@ -26,6 +26,9 @@ import { logTurn } from "@/lib/log";
 import type { DialogueRequest, ChatTurn, Register, Skin } from "@/lib/types";
 
 export const runtime = "nodejs";
+// Turns take 10–20s to generate; Vercel's default function limit (10s) would
+// kill the call mid-generation. 60s is the ceiling on the Hobby plan.
+export const maxDuration = 60;
 
 function sse(event: string, data: unknown): string {
   return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
